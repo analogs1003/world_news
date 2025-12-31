@@ -2,7 +2,7 @@ name: Daily News Update
 
 on:
   schedule:
-    - cron: '0 21 * * *' # 日本時間の毎朝6時（世界標準時21時）に実行
+    - cron: '0 * * * *'   # 1時間に1回（毎時0分）に実行
   workflow_dispatch:      # 手動でボタンを押して更新することも可能
 
 jobs:

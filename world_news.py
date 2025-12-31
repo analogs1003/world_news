@@ -109,8 +109,18 @@ def build_popup_html(country, articles, total_score):
     """ポップアップ内のダークモードHTMLを生成"""
     count = len(articles)
     html = f"""
-    <div style='min-width:500px; max-width:700px; background-color:{COLORS["BG_DARK"]}; color:{COLORS["TEXT_SOFT"]}; 
-                padding:20px; border-radius:12px; font-family:sans-serif; line-height:1.5;'>
+        <div style='
+            width: 85vw;        /* 画面横幅の85%にする（スマホではみ出さない） */
+            max-width: 550px;   /* PCでも広がりすぎないように制限 */
+            min-width: 280px;   /* 小さくなりすぎないように */
+            background-color:{COLORS["BG_DARK"]}; 
+            color:{COLORS["TEXT_SOFT"]}; 
+            padding: 15px; 
+            border-radius: 12px; 
+            font-family: sans-serif; 
+            line-height: 1.5;
+            overflow-x: hidden; /* 横揺れ防止 */
+        '>
         <div style='border-bottom:1px solid #444; margin-bottom:15px; padding-bottom:10px;'>
             <b style='font-size:26px; color:{COLORS["BLUE_PALE"]};'>【{country}】</b><br>
             <span style='color:#888; font-size:16px;'>注目度: {total_score:.1f} / 記事数: {count}</span>
@@ -205,7 +215,7 @@ def create_global_news_center():
         folium.CircleMarker(
             location=[articles[0]["lat"], articles[0]["lon"]],
             radius=5 + (total_score * 2.5),
-            popup=folium.Popup(pop_content, max_width=750),
+            popup=folium.Popup(pop_content, max_width=600),
             tooltip=f"{country}: スコア {total_score:.1f} ({len(articles)}記事)",
             color=color, fill=True, fill_color=color, fill_opacity=0.5, weight=1
         ).add_to(m)

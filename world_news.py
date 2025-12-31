@@ -287,6 +287,31 @@ def create_global_news_center():
         <i style="background:{COLORS['CYAN']};width:10px;height:10px;display:inline-block"></i> 静か</div>'''
     m.get_root().html.add_child(folium.Element(legend_html))
 
+    # --- 最終更新日時の取得 ---
+    now_jst = datetime.utcnow() + timedelta(hours=JST_OFFSET)
+    last_update_str = now_jst.strftime('%Y/%m/%d %H:%M')
+
+    # --- 更新日時表示用のHTML ---
+    update_label_html = f'''
+        <div style="
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            z-index: 9999; 
+            background: rgba(30, 30, 30, 0.8); 
+            color: #90caf9; 
+            padding: 8px 15px; 
+            border-radius: 10px; 
+            font-family: sans-serif; 
+            font-size: 12px; 
+            border: 1px solid #444;
+            pointer-events: none;
+        ">
+            ⏱ 最終更新 (JST): {last_update_str}
+        </div>
+    '''
+    m.get_root().html.add_child(folium.Element(update_label_html))
+
     m.save("index.html")
     print("✨ 完成しました！")
 

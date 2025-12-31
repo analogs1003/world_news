@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e497513ea445f8f273417551afeb8848 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div id="news-panel" style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; max-width:700px; background:rgba(20,20,20,0.98); color:white; z-index:10000; padding:30px; border-radius:20px; box-shadow:0 0 50px rgba(0,0,0,0.9); border:2px solid #bb86fc; font-family:sans-serif; overflow-y:auto; max-height:85vh; display:block;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+            <h2 style="margin:0; color:#bb86fc; font-size:26px;">🌍 世界の主要トレンド (3カ国以上)</h2>
+            <button onclick="document.getElementById('news-panel').style.display='none'" style="background:none; border:none; color:#aaa; font-size:40px; cursor:pointer;">&times;</button>
+        </div>
+        <ul style="padding-left:0; list-style:none;">
+            <li style='margin-bottom:30px; border-bottom:1px solid #444; padding-bottom:18px;'>
+                <div style='font-size:19px; font-weight:bold; color:#fff; margin-bottom:12px; line-height:1.4;'>「国民は負担と格闘している」：日本は再生可能エネルギーと並行して原子力の「最大化」に重点を置く方向に舵を切る <span style='color:#bb86fc;'>(5カ国)</span></div>
+                <div style='display: flex; flex-wrap: wrap;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>インド 🇮🇳</a><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>オーストラリア 🇦🇺</a><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>NZ 🇳🇿</a><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>カナダ 🇨🇦</a><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>イギリス 🇬🇧</a></div>
+            </li>
+            <li style='margin-bottom:30px; border-bottom:1px solid #444; padding-bottom:18px;'>
+                <div style='font-size:19px; font-weight:bold; color:#fff; margin-bottom:12px; line-height:1.4;'>Apple、日本で限定版の AirTag を無料配布 <span style='color:#bb86fc;'>(4カ国)</span></div>
+                <div style='display: flex; flex-wrap: wrap;'><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxOZGx3OXVteUhTWDY5c0ZWbG1PMm91RVd6SXlIcGI3NVhxZWsxMkJrRDg1bjBHbTF1eWdfQ1A3dGhlWDZIaGJmM21fRThPa2xkOUNHQUdVZFY5MmZTcGZOUDM0QkQ3U1JTZURSaHhvTWcxT2p3eFZzS3oycWMyT0VPd0dmQ2xNbV81YzMybEJxZmk3aEtjN3U2aDM2RkVQUm9QNFAxVTVqVDJPVzRPQXNUUFN3?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>アメリカ 🇺🇸</a><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxOZGx3OXVteUhTWDY5c0ZWbG1PMm91RVd6SXlIcGI3NVhxZWsxMkJrRDg1bjBHbTF1eWdfQ1A3dGhlWDZIaGJmM21fRThPa2xkOUNHQUdVZFY5MmZTcGZOUDM0QkQ3U1JTZURSaHhvTWcxT2p3eFZzS3oycWMyT0VPd0dmQ2xNbV81YzMybEJxZmk3aEtjN3U2aDM2RkVQUm9QNFAxVTVqVDJPVzRPQXNUUFN3?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>カナダ 🇨🇦</a><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxOZGx3OXVteUhTWDY5c0ZWbG1PMm91RVd6SXlIcGI3NVhxZWsxMkJrRDg1bjBHbTF1eWdfQ1A3dGhlWDZIaGJmM21fRThPa2xkOUNHQUdVZFY5MmZTcGZOUDM0QkQ3U1JTZURSaHhvTWcxT2p3eFZzS3oycWMyT0VPd0dmQ2xNbV81YzMybEJxZmk3aEtjN3U2aDM2RkVQUm9QNFAxVTVqVDJPVzRPQXNUUFN3?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>イギリス 🇬🇧</a><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxOZGx3OXVteUhTWDY5c0ZWbG1PMm91RVd6SXlIcGI3NVhxZWsxMkJrRDg1bjBHbTF1eWdfQ1A3dGhlWDZIaGJmM21fRThPa2xkOUNHQUdVZFY5MmZTcGZOUDM0QkQ3U1JTZURSaHhvTWcxT2p3eFZzS3oycWMyT0VPd0dmQ2xNbV81YzMybEJxZmk3aEtjN3U2aDM2RkVQUm9QNFAxVTVqVDJPVzRPQXNUUFN3?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>UAE 🇦🇪</a></div>
+            </li>
+            <li style='margin-bottom:30px; border-bottom:1px solid #444; padding-bottom:18px;'>
+                <div style='font-size:19px; font-weight:bold; color:#fff; margin-bottom:12px; line-height:1.4;'>日本、スパイ防止法の検討を開始 <span style='color:#bb86fc;'>(3カ国)</span></div>
+                <div style='display: flex; flex-wrap: wrap;'><a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE1XeDlDMkRjbVd2UF9Nc0g4bDNEOFItQWtfVElGN2RKMHY0b2N1SFJLNFkwU3d6cGtGT0tNS0UwcnJ5OVByRkRMZDBJRi1pQTY4Ym0xUW5IUHM4aWJY?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>シンガポール 🇸🇬</a><a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE1XeDlDMkRjbVd2UF9Nc0g4bDNEOFItQWtfVElGN2RKMHY0b2N1SFJLNFkwU3d6cGtGT0tNS0UwcnJ5OVByRkRMZDBJRi1pQTY4Ym0xUW5IUHM4aWJY?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>マレーシア 🇲🇾</a><a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE1XeDlDMkRjbVd2UF9Nc0g4bDNEOFItQWtfVElGN2RKMHY0b2N1SFJLNFkwU3d6cGtGT0tNS0UwcnJ5OVByRkRMZDBJRi1pQTY4Ym0xUW5IUHM4aWJY?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>フィリピン 🇵🇭</a></div>
+            </li>
+            <li style='margin-bottom:30px; border-bottom:1px solid #444; padding-bottom:18px;'>
+                <div style='font-size:19px; font-weight:bold; color:#fff; margin-bottom:12px; line-height:1.4;'>インドが日本を抜いて第4位の経済大国になると報告書が発表 <span style='color:#bb86fc;'>(3カ国)</span></div>
+                <div style='display: flex; flex-wrap: wrap;'><a href='https://news.google.com/rss/articles/CBMikwFBVV95cUxQaDBsVmpiZHJNTXVGUzQtVm1SSW83Rkt4RFd5cU1SdzZJZkxtU1c3UXRkNmx6ODMzMGZ4YWFyQ09XclFKUFpseVpnaDAzeEVsVGdNZHNaaHJnNHJTNWU4Q1hqUk9rNC1rbFBKY1JPbFc3M0I5TThGdk5GbjN6Yko2STRjWHhMYURvN2tzREo5R2Y2bU3SAZMBQVVfeXFMTUh6X1ZPNV9DQmZBdl9jRDU3WVJ3a3BwdUZOaGNBZ0h0ZkF3engzd25FSkxweFB6LXRjQ3psbVJEVHF2N1A1dlZJc3FydHV2NThzRzJnMkJUeDRUMUNCMG1nWlY4X1NNNUZGMFZsOThtdnIyenhRWllZemZUQ1hydENVVk1mdm55cUJDS0RBMWtXbjY4?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>インド 🇮🇳</a><a href='https://news.google.com/rss/articles/CBMikwFBVV95cUxQaDBsVmpiZHJNTXVGUzQtVm1SSW83Rkt4RFd5cU1SdzZJZkxtU1c3UXRkNmx6ODMzMGZ4YWFyQ09XclFKUFpseVpnaDAzeEVsVGdNZHNaaHJnNHJTNWU4Q1hqUk9rNC1rbFBKY1JPbFc3M0I5TThGdk5GbjN6Yko2STRjWHhMYURvN2tzREo5R2Y2bU3SAZMBQVVfeXFMTUh6X1ZPNV9DQmZBdl9jRDU3WVJ3a3BwdUZOaGNBZ0h0ZkF3engzd25FSkxweFB6LXRjQ3psbVJEVHF2N1A1dlZJc3FydHV2NThzRzJnMkJUeDRUMUNCMG1nWlY4X1NNNUZGMFZsOThtdnIyenhRWllZemZUQ1hydENVVk1mdm55cUJDS0RBMWtXbjY4?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>NZ 🇳🇿</a><a href='https://news.google.com/rss/articles/CBMikwFBVV95cUxQaDBsVmpiZHJNTXVGUzQtVm1SSW83Rkt4RFd5cU1SdzZJZkxtU1c3UXRkNmx6ODMzMGZ4YWFyQ09XclFKUFpseVpnaDAzeEVsVGdNZHNaaHJnNHJTNWU4Q1hqUk9rNC1rbFBKY1JPbFc3M0I5TThGdk5GbjN6Yko2STRjWHhMYURvN2tzREo5R2Y2bU3SAZMBQVVfeXFMTUh6X1ZPNV9DQmZBdl9jRDU3WVJ3a3BwdUZOaGNBZ0h0ZkF3engzd25FSkxweFB6LXRjQ3psbVJEVHF2N1A1dlZJc3FydHV2NThzRzJnMkJUeDRUMUNCMG1nWlY4X1NNNUZGMFZsOThtdnIyenhRWllZemZUQ1hydENVVk1mdm55cUJDS0RBMWtXbjY4?oc=5' target='_blank' style='display:inline-block; background:#333; color:#03dac6; padding:6px 12px; border-radius:8px; margin:5px 5px 0 0; text-decoration:none; font-size:14px; border:1px solid #03dac6;'>ナイジェリア 🇳🇬</a></div>
+            </li></ul>
+        <div style="text-align:center; margin-top:20px;"><button onclick="document.getElementById('news-panel').style.display='none'" style="background:#bb86fc; color:black; border:none; padding:15px 45px; border-radius:10px; cursor:pointer; font-weight:bold; font-size:20px;">地図を探索する</button></div>
+    </div>
+    <div id="show-button" style="position:fixed; top:80px; left:10px; z-index:9999;"><button onclick="document.getElementById('news-panel').style.display='block'" style="background:#1f1f1f; color:#bb86fc; border:2px solid #bb86fc; width:65px; height:65px; border-radius:15px; cursor:pointer; font-size:35px;">🔥</button></div>
+    
+    
+            <div class="folium-map" id="map_e497513ea445f8f273417551afeb8848" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_e497513ea445f8f273417551afeb8848 = L.map(
+                "map_e497513ea445f8f273417551afeb8848",
+                {
+                    center: [20.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 2.3,
+  "zoomControl": true,
+  "preferCanvas": false,
+  "worldCopyJump": true,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b68755d670ed437153029ec0d77078e2 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_b68755d670ed437153029ec0d77078e2.addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+            var circle_marker_54657e6fe1b82e2731ba83e75ffa3f49 = L.circleMarker(
+                [35.9, 127.76],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_a25c53740ed165a908e6704cb0d2df4b = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_f506bebdab0b27dd04c5d921e7cd1366 = $(`<div id="html_f506bebdab0b27dd04c5d921e7cd1366" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【韓国 🇰🇷】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiggFBVV95cUxQcUd6Yk5fOFRLMmF6am1IX0RCOGdnSGdueW1YRDF6MWd6Uy1VQWVSUHZvVzMzWlhuMVFrUXJjdGQ1dVVOSl9GLXYxMnI2NlhtVWloZ3FFT0NMa1I5TW9kN253NmdxS1MxLWM3bmxPVklCMFhzLXZpb1RoZXJCZnhZV2VB?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・中国政府「日本旅行自粛」にもかかわらず…旧正月のホテル予約6割増</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiUEFVX3lxTFB2aHZ5NTVUWW5qWUV2MFBocl9tVURFRUp4cDhLbFpNTlFWZTd0OHpRczh2X2d5TUxBcXdoQWlfM1NIQ203Y0VHQ2Q2X2JKUV9X?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・国の恥…居酒屋で「金がない」と叫びガラスも割る50代韓国人男性</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMigwFBVV95cUxQaGR1a2VkZm12R1lMdVpHYjM3b01rc2JKejAzMEhTWTU0YmxXZUltOGdjSnBPMjN0cUU4RTRtSDhRVzFIbjhZLS1vaHNYQVNzVzJFdlgxSFNUSUxmRGFXSmRVUUlnZ3hvU1NFSkkxT3pPTGREbjRuclBPX0lvU2R1VWhXWQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・「このままでは韓国に何もかも奪われてしまう」…日本限定だった「この車」がついに動いた。</a></div></div></div>`)[0];
+                popup_a25c53740ed165a908e6704cb0d2df4b.setContent(html_f506bebdab0b27dd04c5d921e7cd1366);
+            
+        
+
+        circle_marker_54657e6fe1b82e2731ba83e75ffa3f49.bindPopup(popup_a25c53740ed165a908e6704cb0d2df4b)
+        ;
+
+        
+    
+    
+            circle_marker_54657e6fe1b82e2731ba83e75ffa3f49.bindTooltip(
+                `<div>
+                     韓国 🇰🇷
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_30d55e9864a49c0230bc1ec09db64ad7 = L.circleMarker(
+                [34.66, 104.16],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_3e91ef554e2116c223de46381b1d841e = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_e8d23afa26000be5bc518f98e848ea53 = $(`<div id="html_e8d23afa26000be5bc518f98e848ea53" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【中国 🇨🇳】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTFBPOVVOd3RvanVzWVNPemNtbkhUU19XOFZ2aHBrMXlfNGp2LXZVX29FM1RHQ3pvVTE4UGE5XzNJM283UEVjc28wZzhGd25KdUxNMm1aalZHckMzNWNtcFl0YkJ4T2xiTzNT?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本は来年末までに「安全保障三文書」を改定する予定だ。専門家：それはさらに深刻な困難に直面するだけだ。</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMidkFVX3lxTE42SlpQeHJUaHQwa1pocnVWTS0xX3BmLXZmdEFGTnZLVTFLVWRDT21YdlVtRF9lOTlGNy00TmhtZ3Q3MExGWnJkQTF5Y1VYeGd5b2RycUJjVjQzNW1OM29JNlVKZXAwVEVmODFqbTZXSThuUUpqMUE?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・ビデオ丨国際社会: 国際社会は日本の軍国主義の台頭に対して警戒すべきである</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5zbHQ2YXR3WnhMOG5FOW03eF91U29XV3NPYy1BSXBBSkF3ZlVITzFTWjdqVGFYdmJvVTBVR1dXR0dDRWlOd0NhdDRzd0wxUVBWVVVfWXRfN1VzbWFPc0VkS0lYYS02ZV8xUm4tdA?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・敗戦から80年経っても、日本は未だに歴史と安全保障の清算をしていない（国際フォーラム）</a></div></div></div>`)[0];
+                popup_3e91ef554e2116c223de46381b1d841e.setContent(html_e8d23afa26000be5bc518f98e848ea53);
+            
+        
+
+        circle_marker_30d55e9864a49c0230bc1ec09db64ad7.bindPopup(popup_3e91ef554e2116c223de46381b1d841e)
+        ;
+
+        
+    
+    
+            circle_marker_30d55e9864a49c0230bc1ec09db64ad7.bindTooltip(
+                `<div>
+                     中国 🇨🇳
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a968ccda8abd940f47d1449aaba577e2 = L.circleMarker(
+                [23.69, 120.96],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_c08be18ef96e64d9bc81001c1cf330b3 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_a1365e171db60f2702ef574b3f68bc92 = $(`<div id="html_a1365e171db60f2702ef574b3f68bc92" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【台湾 🇹🇼】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiYEFVX3lxTE1iYlZNSWN1MmQ2Y3NyODREWnB1OFAwd2JzcnROay1KbGFhbzc3d0VUVno0SWlhOHhaRFdGLWdYOVoyQ2kySVRiU3c2aXMweWNQZWJJUlVxU1REWHVob3QzRdIBZkFVX3lxTE9mRGpmQjlKMVNaN05IY2dFbUtKUmJDSHJBenRxV1pSMlZKRUFRZy16WWRIY2NsZ04wTmEyR0lzZWpyejRqSFZPZWpuanZEck12dWJGTXVobFFWbXJpaG1EZXl6anNfdw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・中國軍演未發射彈道飛彈 日媒：回避刺激日本</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMicEFVX3lxTE0tSGtmdU93Z2hWUXB4aGl1UnYzMGVCQm5SbkNOR0Y0R05ndUtOeDhZRWVybkp4eXd0dHhmNE1sWDY0S2tROEJfT3RPOUpYTXFDX0FHLVc3OEVFZlVCYlZ6aDhRSlg4RkZObHdtMGZ2YmI?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・戰敗八十年、日本仍未算清歷史賬、安全賬（國際論壇） --新聞報道-中國共產黨新聞網</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMihANBVV95cUxOcUZNU1F4U1o0eXVXdDRlSmVrTFgyWTJ2WUMxQWN1d0RKRUlFdHBiel9JeE0yMXo4Zmlfd1B1ejVBU0pKS0tGeGcwYUpVVUlwaVpuNklscnQ5V3gwaUMyT3NMSHhjNVVHb29vODF0NFk1eUM1U0tsemNJVFAzdGRlZ2duTnNqRWk5MlMxd19JSGQ3N2Ewd2prSXllT1dSTHpfdGtSZ1pCT0NzUmpPUi1aY2gwNzVnWU5mR3RZcDZZd25HOTRuSHppTFhiRThFQ0wwVXdxVzhPXzZJUkZGUFdKdzNUbV9YMW94dVFzNmduckNyQ2dVdGhfQk9QaERzVVhzQmozeHZMT3V0YnVRSC11MDg2ZEJIZ3ozWk5kYnM0SnhaS2Y0OHBKUmFoQmJrMEFoZVJFbWtGcXJJclRfa3VaWnhIRnI1UG92MGJMQ2FWTHZOZDVoWmhMSzN6RmZseU9ZX0g2bUpNQ3JxS05vMG5CYTFRNnJZQkpKb25aamFfcy11TS1y?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・中國軍演離台灣只剩9海浬！歐盟、日本接連發聲：停止武力覚迫</a></div></div></div>`)[0];
+                popup_c08be18ef96e64d9bc81001c1cf330b3.setContent(html_a1365e171db60f2702ef574b3f68bc92);
+            
+        
+
+        circle_marker_a968ccda8abd940f47d1449aaba577e2.bindPopup(popup_c08be18ef96e64d9bc81001c1cf330b3)
+        ;
+
+        
+    
+    
+            circle_marker_a968ccda8abd940f47d1449aaba577e2.bindTooltip(
+                `<div>
+                     台湾 🇹🇼
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4268470b85e8b87e6f0a1fbee50d7ffa = L.circleMarker(
+                [22.31, 114.16],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_f05a29291d0b7eab56840af84e8b1df9 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_1784a98b865f9bc17b467755b15d0627 = $(`<div id="html_1784a98b865f9bc17b467755b15d0627" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【香港 🇭🇰】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi9gJBVV95cUxPZWhwRV9LQkU0UEpubjU1NGo0THRMMGFMcW9oWjFfY29TWEh2SjUwZzVmT05xVEQzUS1rOTlWYXZlOFFpeTBRYXU5ay1MTkN1NDg4cG9ZUXNSbHU0X1JWSTJRYU4wWXFpUHl5eEZ4YzA2aV9nVjhHWER0eW1zNjEzeVE0UzI4U19QZUdScWRhV0pkSUZHQ2h5cnpZRVptUnpjSVpSTWNiRlBvRnI1T1poRU55SmdNTWU1YU9jb3VKbGJ1dFZUckdTVk9QSEV5Yl9mMHBMVHJMakFYRDRHMlpHdS1JejhRcjZFY1RfTFF4aHZ1VXdyVzhPRkg1dFY3Nnhhb0FFbXotOVlhN0dxZWtZazRRWTJlVERlMlVNTEsxdHdRTF9uZEczX0FxOVVMbTVIV1Jrb3dpU0xNT0N6eGdLMkJhSlNnVGx1d0cyVlg5SHNpQzN6NDJLSWRsZE1sX0t3QmVIVlZLOTc1UnlDSG1kSm9vamZZQQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本旅遊｜住宿稅最大加十倍去京都要趕在3月1日前！</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMicEFVX3lxTE0tSGtmdU93Z2hWUXB4aGl1UnYzMGVCQm5SbkNOR0Y0R05ndUtOeDhZRWVybkp4eXd0dHhmNE1sWDY0S2tROEJfT3RPOUpYTXFDX0FHLVc3OEVFZlVCYlZ6aDhRSlg4RkZObHdtMGZ2YmI?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・戰敗八十年、日本仍未算清歷史賬、安全賬（國際論壇） --新聞報道-中國共產黨新聞網</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMid0FVX3lxTE92bXM0T2RQNmQ3QXh2YXZwbHVKaV9YZTZEbkhhSGtQbEhuUzU1R1VqNERGc0Q3c204VEkxMW1tekNPdk1CYy1XWm44RDhnd0xTTEt1dTVyYTlOQkxfaklnUV9aa3JHMEQzQ3Byb1VLTUZFRXpsaEFR?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本借印太戰略外橋台海構建跨區安全網謀軍事大國（何以日本系列之三）</a></div></div></div>`)[0];
+                popup_f05a29291d0b7eab56840af84e8b1df9.setContent(html_1784a98b865f9bc17b467755b15d0627);
+            
+        
+
+        circle_marker_4268470b85e8b87e6f0a1fbee50d7ffa.bindPopup(popup_f05a29291d0b7eab56840af84e8b1df9)
+        ;
+
+        
+    
+    
+            circle_marker_4268470b85e8b87e6f0a1fbee50d7ffa.bindTooltip(
+                `<div>
+                     香港 🇭🇰
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_72ee7b3ea493c0e82fd5757a5ca00c2b = L.circleMarker(
+                [15.87, 100.99],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_f44c8c6611e6b11fb2100b75a7aadbb8 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_dd99a18bbfd13bdc4baf8c49cfbb67a2 = $(`<div id="html_dd99a18bbfd13bdc4baf8c49cfbb67a2" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【タイ 🇹🇭】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiXkFVX3lxTE54a0VBd3NRUDM0T3VLeUFYRnFIR2pmWU93SkFuX1pFY25vVVBnU3R3Vk1VaHM2VXh1UHhPUjhHVTllX1ZMNjVxb1RTUVBnOUcwMFNwSmhxUVl4UHIyOGc?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・本当に暑いです！インド経済は非公式に日本を追い抜き、世界第４位にランクされている。次の目標は3年以内に打倒ドイツ。</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiTEFVX3lxTE5yWHh4UHBDTEwtUzEwWWkxQnBuS29NdG9mRVAySm9BUlVYTWZXbmxlUW9mLWp5M3VSVWhmZlBINTFqbkhET3JyZEN2UTc?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・Apple Japan、iPhoneを買うとだるま柄のAirTagが無料になる新年キャンペーンを開始。</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiSkFVX3lxTE9GNmVxVDFVZkNHeFpHS2xXU1Y5c2RrYTAtRzN3TnBhX294RWlPT3JTaUMtalN4a3ZPTlNTYkRablphNjM5cUIxTUl30gFEQVVfeXFMTTRzY1M0eFlaTDdCbV9GbGJ5RXk0OVlaQ0F4UDFKOUVnX2JxcG8xYWdpczdQVHpwOTlZQ3hCN2p3a3hXZHE?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・若い日本人男性が寺院に侵入し、罪を洗い流すために座って泣きました。</a></div></div></div>`)[0];
+                popup_f44c8c6611e6b11fb2100b75a7aadbb8.setContent(html_dd99a18bbfd13bdc4baf8c49cfbb67a2);
+            
+        
+
+        circle_marker_72ee7b3ea493c0e82fd5757a5ca00c2b.bindPopup(popup_f44c8c6611e6b11fb2100b75a7aadbb8)
+        ;
+
+        
+    
+    
+            circle_marker_72ee7b3ea493c0e82fd5757a5ca00c2b.bindTooltip(
+                `<div>
+                     タイ 🇹🇭
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aa1dd780edfe950cd52fd83eb09d5088 = L.circleMarker(
+                [1.35, 103.81],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_5a3515c18f843f53bac25031920c392f = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_a3c3f744af695b4c6279632c81bd876f = $(`<div id="html_a3c3f744af695b4c6279632c81bd876f" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【シンガポール 🇸🇬】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMixgFBVV95cUxNZ2RiMzhyXzAxLVBhcTB0ZFRvTzZaSEZjemJIQm1oU2ZtcVNSLVkxcUZlUFpVV0V4Q0JmT1M1U1Z3LXhfdmpzaWRtVGdwYlZpNDN3LTI0WDZMZlh1VWNvRms2RThfVFNFWGFsY0JIVWctWFJ4NGdZcEJOd3JCXzN3Qk5UbGtxUm15N3pzSnpzWDNKQXdSYVhnU2pQQ181R2R4VDQtU3dsRXpvdGZqc25MbU5HQVV0RkNYaDZYQk0xUjdhWHBSblE?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本は中国の台湾周辺での軍事演習で「緊張が高まる」と主張</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiowFBVV95cUxQeUtzZW1Va2J6dWM0eTJBck5VRnZKbzdfbV8xd0lpZWdFYVlSSW1sWUFfa1hjOE9wZkQ4cVlMSnFHQTloVEp5QmNvalI2ZHp0ZTI2VGxaZ09aMkQ1X1k2cWpZaEM4cjBOTDhxWGxTMHVZN1BFR2RjZFNQRVVtSktJSFVmTVVfZ0VHZXUtYktGWGw2MUhZQXR3OFlONTVjek5OWlJN?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本、税制見直しで自動車購入に対する環境課税を廃止へ</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE1XeDlDMkRjbVd2UF9Nc0g4bDNEOFItQWtfVElGN2RKMHY0b2N1SFJLNFkwU3d6cGtGT0tNS0UwcnJ5OVByRkRMZDBJRi1pQTY4Ym0xUW5IUHM4aWJY?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本、スパイ防止法の検討を開始</a></div></div></div>`)[0];
+                popup_5a3515c18f843f53bac25031920c392f.setContent(html_a3c3f744af695b4c6279632c81bd876f);
+            
+        
+
+        circle_marker_aa1dd780edfe950cd52fd83eb09d5088.bindPopup(popup_5a3515c18f843f53bac25031920c392f)
+        ;
+
+        
+    
+    
+            circle_marker_aa1dd780edfe950cd52fd83eb09d5088.bindTooltip(
+                `<div>
+                     シンガポール 🇸🇬
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_229f5ff9610d422aacdfdbd1ab77b8aa = L.circleMarker(
+                [4.21, 101.97],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_bfdb5dbf63229dfb137653692d0ad564 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_44ac087c929532ce34e1bef93c2e8991 = $(`<div id="html_44ac087c929532ce34e1bef93c2e8991" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【マレーシア 🇲🇾】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMie0FVX3lxTFB0VDJpeVJtS1VXcFN6NmNzbFVGbmI3SmZoaDVCRkRhN0U0V1NNcWlRUEM4REtDQ2RmdWZjQ2Myc3ZxYmVwSWIteW9lTm5VU0Qtck9ubVBUWDRWekI2SXBvZzE0U2tibjZyYUwzSmF5cS1Hc3M4WllhQ3RKSQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本、2025年4月から10月までに捕獲されたクマの数が過去最高を記録</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiwgFBVV95cUxOdG5MMUhWQzFXNTJTRVVDTHNSOFRteTVabmZIUXh1eWpKb1BEZnl5ZVFfY21pSzVEc3duN0hRX0hNTmFqZmNHc3JWQktFVHFmam5adjNxenhEZjkwZTVQaExHQlRZdUNyQkZKVFdfMEp2dXRnUWo1TmZTdU8xQ2VZUlhxMTZwRTl0MkZieWVvX19ROXlOMHNvY3pSWDczTWhxR0VycGxuR2lXWU1EVF9GUmJoVlpxQnFZQ0RZYXVsd0lSdw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・中国、日本への旅行を制限、ビザ申請の削減を命令</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE1XeDlDMkRjbVd2UF9Nc0g4bDNEOFItQWtfVElGN2RKMHY0b2N1SFJLNFkwU3d6cGtGT0tNS0UwcnJ5OVByRkRMZDBJRi1pQTY4Ym0xUW5IUHM4aWJY?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本、スパイ防止法の検討を開始</a></div></div></div>`)[0];
+                popup_bfdb5dbf63229dfb137653692d0ad564.setContent(html_44ac087c929532ce34e1bef93c2e8991);
+            
+        
+
+        circle_marker_229f5ff9610d422aacdfdbd1ab77b8aa.bindPopup(popup_bfdb5dbf63229dfb137653692d0ad564)
+        ;
+
+        
+    
+    
+            circle_marker_229f5ff9610d422aacdfdbd1ab77b8aa.bindTooltip(
+                `<div>
+                     マレーシア 🇲🇾
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c320b56a7ae1f55aae4fbe6b3f8bc6c9 = L.circleMarker(
+                [12.87, 121.77],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_5bddac7599d20b3fc5640f1a84028b4b = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_afa4b6a95d773d992a2a60a6b9dbd2a7 = $(`<div id="html_afa4b6a95d773d992a2a60a6b9dbd2a7" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【フィリピン 🇵🇭】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE1XeDlDMkRjbVd2UF9Nc0g4bDNEOFItQWtfVElGN2RKMHY0b2N1SFJLNFkwU3d6cGtGT0tNS0UwcnJ5OVByRkRMZDBJRi1pQTY4Ym0xUW5IUHM4aWJY?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本、スパイ防止法の検討を開始</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMitAFBVV95cUxOd05WUi1jd3pIMllnejJmeG9vNHZVODFXUGFlU0pud0hHV1ZJM2owZ1RkLUZXb2xoQkt3bUpvb2JIT3NlM2EzU2JrLVNDLVRodmhBRlJsRkFtdFVHcmZobmlFeTNJNGMwMHBlQWJKeVp2Z0VqUVF1NDYyYlpZcDFuWG9oRXE3OEVnT0hHTFFSajVUWXdTR2hlMlE1d1Z6R3FwS3RTX0F3SXBOWEZGMTVhM2Z4WnnSAboBQVVfeXFMTlpMMzBRZFNVSTNDekI2blZjVVUwRUR3UkJId2ZXanNEN0JuSExnemN1Mll5bFBBeUFIMjN4TkJZUzZYMmxCUEpSWGhsalh3NmgzcDRDX3l5djJpZ0d3SjlSanBFaHF6U1BRSWwyOEdfWkw3SUtZdUdXV3RNRXFlX3Zac0RYQWVEUW9yRVZIT3BULVdWYV9lWW1Qa09wZG5McHQ2S0drVEJsaGJXbThhdUVnOWpIMFoxT2JR?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・アン・カーティスとエルワン・ヒューサフは家族とともに日本へ飛行機で出発 | GMAエンターテインメント</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipgFBVV95cUxOc1BDbkhlLTdHeXJUc3ZsczBheGU2LTlXU2JjR05hWTZSYWtkVFZuQUd2WUhkXy1NZHo3SndNLW1JMU1oekZDRVI3dmRtWXJXR3hXdC1HY092YU9WNFdKdmhGa09iVTZ6UWNfZWhnZFFtNHBQX1duakplWWwwT2xGbVJZXzhsOUgtSGhFQVk1aG1vVFFXNl96WmFJRXpMaV9FV1hQMU1R?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・ベトナムのFPTが日本市場に初の商用チップを納入</a></div></div></div>`)[0];
+                popup_5bddac7599d20b3fc5640f1a84028b4b.setContent(html_afa4b6a95d773d992a2a60a6b9dbd2a7);
+            
+        
+
+        circle_marker_c320b56a7ae1f55aae4fbe6b3f8bc6c9.bindPopup(popup_5bddac7599d20b3fc5640f1a84028b4b)
+        ;
+
+        
+    
+    
+            circle_marker_c320b56a7ae1f55aae4fbe6b3f8bc6c9.bindTooltip(
+                `<div>
+                     フィリピン 🇵🇭
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_be4f83583c7ccd3025e7f75a85eae050 = L.circleMarker(
+                [-0.78, 113.92],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_6d92094a19fa2670d4ae8bc8389f3467 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_4ac2fa6d55a921ecffc0688bc7475c17 = $(`<div id="html_4ac2fa6d55a921ecffc0688bc7475c17" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【インドネシア 🇮🇩】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMixwFBVV95cUxPUEtYYnBXa19wSmlaM1lNaWlRcldYMThTNHBMTjZ2SFdJZ2VBX3VNZVZOZFk0Yk5ySjM0Snk0enR3bWgyX2RrMTkwNUw5UEVreWZJSXdGcDhiN05mQk5yZkxDR29ISVZwUW1SU2RHOW5XQ0pHUzRsMHBMd0JzYnBmbGF6TmE2cks5MW15eHI1T1RGWTZabFJFd1NOeVp4NW9UTzFQLUJacnowZ29lMmpSdEJQZEJRc2JyMnFzWjFvV0h3QU1ZQW5v?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・マグニチュード5.0の中規模地震が日本を震撼させる</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiowFBVV95cUxOSHBaRVBselhJZ242X1IwcmZRdzhJYXdmc0hUQ2dZSGZxZUJHR0E2azlVU0lXTUVkZ09SVVc5enJBR0pSbDlWc2ZLOWtjLXdDUVFzX191dmtRS1BOY3NqZk5haGtWeGkxSnhUOXdZTjlQa0VHc1B1OUxQMFRRaGF3SDZfN1dYYWI1cGQ3NDgydWlYcEE5WVVJWTJsZW96cWpuRWJR?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・ヨーロッパ、カナダ、日本はガザの人道危機を懸念</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMirwFBVV95cUxNdGd2YnM4ZmktZDJmREtUTGRCNkdaVkoxQjFibVlDRUs1Nm56Tm43R0x5bnBWTmhJNUNfLVZ2aGt4dTVzSjF3cFROc25PUWtlVF9UMWFTVFY3eXV3ZjU0eE1MNklfMHdxYktxb1pTdDdqQklkY0xQN09oMWV4SDZjNTY5Ui1NRlU4TEJIanNzOFczNTNJcUFaeVhIdV9fVHMxZ09TQ2RKUWZLeXgzbkZF0gGyAUFVX3lxTFBRQW5DT1pweWxUMVJ1bnhDT0FiSVY3Q2tNeGlvQmR1YUpteXk0bHcxQ1o1VlpYQklESTdnaS00Y091SGtxRFNnVXkwM2Q3OWVXVFdISldxaU9rUmluOUg4NzZjUGYzaWQxeUpRelpINGJyWnQ0UV9QYkxsQlRYQ0RaMTZjZjdOYVBsU0tmWERvSHhLRHhPcnNLeDRma0RDc2U0dDN3ZG9NTWZBZGFYM0VqZ1E?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本の警察、容疑者の顔をスケッチするAIシステムを開発</a></div></div></div>`)[0];
+                popup_6d92094a19fa2670d4ae8bc8389f3467.setContent(html_4ac2fa6d55a921ecffc0688bc7475c17);
+            
+        
+
+        circle_marker_be4f83583c7ccd3025e7f75a85eae050.bindPopup(popup_6d92094a19fa2670d4ae8bc8389f3467)
+        ;
+
+        
+    
+    
+            circle_marker_be4f83583c7ccd3025e7f75a85eae050.bindTooltip(
+                `<div>
+                     インドネシア 🇮🇩
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_98cfa9d8eb408dafd104a8729ccb32c4 = L.circleMarker(
+                [20.59, 78.96],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_1162775060eac0f830c3c10c93f32186 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_6d7fb8a2ad6db7f1ca587e5edc745bce = $(`<div id="html_6d7fb8a2ad6db7f1ca587e5edc745bce" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【インド 🇮🇳】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMikwFBVV95cUxQaDBsVmpiZHJNTXVGUzQtVm1SSW83Rkt4RFd5cU1SdzZJZkxtU1c3UXRkNmx6ODMzMGZ4YWFyQ09XclFKUFpseVpnaDAzeEVsVGdNZHNaaHJnNHJTNWU4Q1hqUk9rNC1rbFBKY1JPbFc3M0I5TThGdk5GbjN6Yko2STRjWHhMYURvN2tzREo5R2Y2bU3SAZMBQVVfeXFMTUh6X1ZPNV9DQmZBdl9jRDU3WVJ3a3BwdUZOaGNBZ0h0ZkF3engzd25FSkxweFB6LXRjQ3psbVJEVHF2N1A1dlZJc3FydHV2NThzRzJnMkJUeDRUMUNCMG1nWlY4X1NNNUZGMFZsOThtdnIyenhRWllZemZUQ1hydENVVk1mdm55cUJDS0RBMWtXbjY4?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インドが日本を抜いて第4位の経済大国になると報告書が発表</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・「国民は負担と格闘している」：日本は再生可能エネルギーと並行して原子力の「最大化」に重点を置く方向に舵を切る</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMirwFBVV95cUxOaFpHMURya1RaRm5DVDBoMDM2T0s0MHpicmJuUWl1SXRDZUhMNG5nMVBZNzN6UnVwdHFNcklBQlhFM1UxV1UyTmhIQjRRQkNJbG1tc0sxOHhxbS1YWE92QzNISlBFRGJfU2JxUjRCWlE2em1jcXFQUXdRaVhyalhUSGh1cHV6SExZbHpCWHJpd2lEVXdYVEVxTWhZQW14b3NPbmxIaUhQbDRMUUFxVVI40gG3AUFVX3lxTFBGbTlCQ3JIZmlCTHB3bTNxNmZXa2FWTy1DSzgtY19WQXpwQUFmYUMzbHpJSFJORzBhYWxKVDk5b1M2ZWxRbzJOV29Md0hLcjVsSVFJcG9vSnpsNHFOaGZ0UnphWEU4V0FhMWNEbGkwV2tSaEI3YmdHM29pRnhjcXNzdmpSVkZVZ0ZOVlk0SEpZUDEtSUp3U1NGb1ZuZjR6Sllsa2FsNFN5V0lSMkVOTkNJekowN0ZWVQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インド、日本を抜いて世界第4位の経済大国に：政府</a></div></div></div>`)[0];
+                popup_1162775060eac0f830c3c10c93f32186.setContent(html_6d7fb8a2ad6db7f1ca587e5edc745bce);
+            
+        
+
+        circle_marker_98cfa9d8eb408dafd104a8729ccb32c4.bindPopup(popup_1162775060eac0f830c3c10c93f32186)
+        ;
+
+        
+    
+    
+            circle_marker_98cfa9d8eb408dafd104a8729ccb32c4.bindTooltip(
+                `<div>
+                     インド 🇮🇳
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2a12b63a8a2b29b4f5579bf1625d07b0 = L.circleMarker(
+                [-25.27, 133.77],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_f827147642f5d2d9b8cde001eeabe2cc = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_7ce3f448d7eb4f6eb56d069b5ded5320 = $(`<div id="html_7ce3f448d7eb4f6eb56d069b5ded5320" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【オーストラリア 🇦🇺】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxQeUR6VmE2SUJiQmZ5a1RiS2xCeGZ4dWFHR2g4dmwwbVpSaXVyVlM0X0ZlRGZUN0poT0ljXzREcGNYUDFyal9HMVBKRkc4amdVMy1Sa1h3U19ZVkZtT3dXekJrNU9obWxDbVVudVBKUk9sbTNqNFdSUFdialduRU1UNjZyaUl2RWZ6WFNGOWdQVjl0TkNvUlZueDZBcW9nd281c0pSYzBIUGlaZG9tdHdlUVF3?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本トヨタは新しい RAV4 アクセサリーパッケージを発売しますが、オーストラリアではどのようなキットが登場するのでしょうか?</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi2AFBVV95cUxOVzYwVXRlQ1g5LXlRR2xtNFF1T2xjdFU2VEZOcXpRWWFaLTRGVzFkQk1MVU9ka0lhRmw0RWI0bXVnY203dGZrcHItclcwNjdhMFFPbWlFRUdHR1F2UXZscVdmbnBvZ3JSdmdEU3dYMWU2RTJ2NHV2eDZTTFJtQ1FXMGFqdXlwd0ExSWc5V1hoM1hERUc2bjFaSG13Z3daVFJwbmVZQXF5cURGWFhfRlp0b3laUW5Gb09hYy0xS3MwRmctWGU3eTlBRU1KeHRfWHcxOGhDT1lwbHHSAd4BQVVfeXFMTUxKampkeVkxeUFQQ1J6NFZ3eUZkWUVLTkVidVZsNTMyMlZ3ZW5aUi1rQ2VvVDNBSHk1UnlMemEzTDFiTkpzS1NXOGpib09BaVlSUnFnWjh4WEdDX080RDNXd1pSWlczQnhTamhOZDlKd1BHaEQzeV9OU0JmVE55eS1oSml5NWZIOWNTWDFYdi1NSEtlazNRcHFQZ0xMa01VdGs4cmdud0ZqLUpEMzFoUGFmTDItSEpUZ2J5WDVFYmFOaFBYTjFnQm9tenY1blpqcHU3ZExxQmRVRGF1ckd3?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本でもこれやるんですか？あなたは最悪の観光客です</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・「国民は負担と格闘している」：日本は再生可能エネルギーと並行して原子力の「最大化」に重点を置く方向に舵を切る</a></div></div></div>`)[0];
+                popup_f827147642f5d2d9b8cde001eeabe2cc.setContent(html_7ce3f448d7eb4f6eb56d069b5ded5320);
+            
+        
+
+        circle_marker_2a12b63a8a2b29b4f5579bf1625d07b0.bindPopup(popup_f827147642f5d2d9b8cde001eeabe2cc)
+        ;
+
+        
+    
+    
+            circle_marker_2a12b63a8a2b29b4f5579bf1625d07b0.bindTooltip(
+                `<div>
+                     オーストラリア 🇦🇺
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_df266ae309625dea75ee9749db0d9d55 = L.circleMarker(
+                [-40.9, 174.88],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_04dce9de499d3d3f4a6d47cebac0fd84 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_824b0e29ea5d535f996cc491c0ca20a7 = $(`<div id="html_824b0e29ea5d535f996cc491c0ca20a7" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【NZ 🇳🇿】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・「国民は負担と格闘している」：日本は再生可能エネルギーと並行して原子力の「最大化」に重点を置く方向に舵を切る</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxQeUR6VmE2SUJiQmZ5a1RiS2xCeGZ4dWFHR2g4dmwwbVpSaXVyVlM0X0ZlRGZUN0poT0ljXzREcGNYUDFyal9HMVBKRkc4amdVMy1Sa1h3U19ZVkZtT3dXekJrNU9obWxDbVVudVBKUk9sbTNqNFdSUFdialduRU1UNjZyaUl2RWZ6WFNGOWdQVjl0TkNvUlZueDZBcW9nd281c0pSYzBIUGlaZG9tdHdlUVF3?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本トヨタは新しい RAV4 アクセサリーパッケージを発売しますが、オーストラリアではどのようなキットが登場するのでしょうか?</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMikwFBVV95cUxQaDBsVmpiZHJNTXVGUzQtVm1SSW83Rkt4RFd5cU1SdzZJZkxtU1c3UXRkNmx6ODMzMGZ4YWFyQ09XclFKUFpseVpnaDAzeEVsVGdNZHNaaHJnNHJTNWU4Q1hqUk9rNC1rbFBKY1JPbFc3M0I5TThGdk5GbjN6Yko2STRjWHhMYURvN2tzREo5R2Y2bU3SAZMBQVVfeXFMTUh6X1ZPNV9DQmZBdl9jRDU3WVJ3a3BwdUZOaGNBZ0h0ZkF3engzd25FSkxweFB6LXRjQ3psbVJEVHF2N1A1dlZJc3FydHV2NThzRzJnMkJUeDRUMUNCMG1nWlY4X1NNNUZGMFZsOThtdnIyenhRWllZemZUQ1hydENVVk1mdm55cUJDS0RBMWtXbjY4?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インドが日本を抜いて第4位の経済大国になると報告書が発表</a></div></div></div>`)[0];
+                popup_04dce9de499d3d3f4a6d47cebac0fd84.setContent(html_824b0e29ea5d535f996cc491c0ca20a7);
+            
+        
+
+        circle_marker_df266ae309625dea75ee9749db0d9d55.bindPopup(popup_04dce9de499d3d3f4a6d47cebac0fd84)
+        ;
+
+        
+    
+    
+            circle_marker_df266ae309625dea75ee9749db0d9d55.bindTooltip(
+                `<div>
+                     NZ 🇳🇿
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_78e098ea636af94b859462b328900b68 = L.circleMarker(
+                [37.09, -95.71],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_735b8e88162368b53ebd9ace6ba35542 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_c6b6aa1d3bf52d317d4d8553ea4f50a2 = $(`<div id="html_c6b6aa1d3bf52d317d4d8553ea4f50a2" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【アメリカ 🇺🇸】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxOMlE2UFF2T1F4T3BheHNJQkRwQ0lleVZQSEFXenJNamRPZWRJd2FaOWp5ZGpHdjVwMU1ScTdPZVdxY0xBQlh6VHVoX1pza1dmd0lnWmZmZDRCQkhzUmtNLXJ5VWJkR1h6QXdOcFVXRzVCN3FldTBTcGJiLVJlRHN5R0ZiZXNLWWZnbDJZNHJiOWxfblRNcjdObGxRRGFreEpKS1lHcQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・SFO発の日本航空便が激しい乱気流に見舞われ、乗務員が負傷</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxOZGx3OXVteUhTWDY5c0ZWbG1PMm91RVd6SXlIcGI3NVhxZWsxMkJrRDg1bjBHbTF1eWdfQ1A3dGhlWDZIaGJmM21fRThPa2xkOUNHQUdVZFY5MmZTcGZOUDM0QkQ3U1JTZURSaHhvTWcxT2p3eFZzS3oycWMyT0VPd0dmQ2xNbV81YzMybEJxZmk3aEtjN3U2aDM2RkVQUm9QNFAxVTVqVDJPVzRPQXNUUFN3?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・Apple、日本で限定版の AirTag を無料配布</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMingNBVV95cUxPanBqX0JlTTFBUjhUMWlpaG1JVzBKUjZ4SHFzaUZPaUE1LVgxSEdjU0owWlhSMnBzZXRwV18tc1JFRlFDVFpRZVNpTGNTc0tHSFBnWC01UVZzcHB0ZHRFWTNYQzFiNm9vOGtka0RFNmtzdzNoR2FTLTNOTTVXYUlLVGdfbXhYeUdTSGRIX204eFFhd0lVcTA3aFNwSGQ2Zlc5R0VaTm5mcVY1bXBzWHRsLTJXekN6TC1kc0FRNVhmU2VrWWlwX2JiN3F5Ukk0VDBnZlI1amhLd0poczlobl83TkUtaUkwM0IyQjFXNW9OWk1sOU1kOGcxb2ZRRGVRRlBLTl9oaVN6ZFdGT0R3WjJmT0tuQXVBcFNCNFlMeGJQTURGc2pER0tqclJMYTVKb1p0cU1UVGJ0Q0NUSXB3MF9FT3psRXBhUGt1Y1dhUk1NRWhsdllCQXVBVlp5NFYxcmVuU2hVZ3AtSlpBQXpwVzNQMnZ0M040a0FZM1pLVnNxVFFObGhFS2ZzVUFBbFhGTW1kdUpPam5Wc3Q1Q1dWakE?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・意見 |日本は軍事支出を強化</a></div></div></div>`)[0];
+                popup_735b8e88162368b53ebd9ace6ba35542.setContent(html_c6b6aa1d3bf52d317d4d8553ea4f50a2);
+            
+        
+
+        circle_marker_78e098ea636af94b859462b328900b68.bindPopup(popup_735b8e88162368b53ebd9ace6ba35542)
+        ;
+
+        
+    
+    
+            circle_marker_78e098ea636af94b859462b328900b68.bindTooltip(
+                `<div>
+                     アメリカ 🇺🇸
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_67dc25078104c8740af73c9cbf6063f2 = L.circleMarker(
+                [56.13, -106.34],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_c5bda16fcea5f6030473fcec6640e1cd = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_f31eb1e5b43c9880ae208ffa1a29cb06 = $(`<div id="html_f31eb1e5b43c9880ae208ffa1a29cb06" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【カナダ 🇨🇦】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxOZGx3OXVteUhTWDY5c0ZWbG1PMm91RVd6SXlIcGI3NVhxZWsxMkJrRDg1bjBHbTF1eWdfQ1A3dGhlWDZIaGJmM21fRThPa2xkOUNHQUdVZFY5MmZTcGZOUDM0QkQ3U1JTZURSaHhvTWcxT2p3eFZzS3oycWMyT0VPd0dmQ2xNbV81YzMybEJxZmk3aEtjN3U2aDM2RkVQUm9QNFAxVTVqVDJPVzRPQXNUUFN3?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・Apple、日本で限定版の AirTag を無料配布</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiwgFBVV95cUxNVjJTWmIxUGZnTm9jY0M1SjBBVm0zUVVCWmVjbHp5Z3JmQWYzM3diNWw3SUF6c3g1SHJQLXBqZGZMd1FiOVphYlN3aF9FeVpHZi1QMmFOWFpZY0ZzNm9HZWJIVFB1MU9seHFBa0wxeEo3UjQtd3RmYmZMdU9vUXZNWjZFd2ozWExsdjN6Vlp3Y1ROZml6NEl0d3hnVHZVZVFWdlQyUXR5VGo3VXRIOGtDbHB6Vkh2cWpzSFdscmJpQU5EQQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・忘れられた章: 原爆投下中の長崎における連合軍捕虜の物語</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・「国民は負担と格闘している」：日本は再生可能エネルギーと並行して原子力の「最大化」に重点を置く方向に舵を切る</a></div></div></div>`)[0];
+                popup_c5bda16fcea5f6030473fcec6640e1cd.setContent(html_f31eb1e5b43c9880ae208ffa1a29cb06);
+            
+        
+
+        circle_marker_67dc25078104c8740af73c9cbf6063f2.bindPopup(popup_c5bda16fcea5f6030473fcec6640e1cd)
+        ;
+
+        
+    
+    
+            circle_marker_67dc25078104c8740af73c9cbf6063f2.bindTooltip(
+                `<div>
+                     カナダ 🇨🇦
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_65f61c511e33d4d3f61461f63ff65b65 = L.circleMarker(
+                [23.63, -102.55],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_4606e2d04d21e17f5a32cb64ea4a91d2 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_1a36735e1e056467a728475dbe51a5a4 = $(`<div id="html_1a36735e1e056467a728475dbe51a5a4" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【メキシコ 🇲🇽】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiuwFBVV95cUxQcWRLX1ZJcnlpQ1FtX0tkZERzVHdocElqQWR2VHRkMXRnTHZGZlZrRVlIazJDak5ES0V3akNFLTd3RDJGc3BIQndXRHpKZTVkMkd5djRVaEdJdXBCZDUxdUpfMUVNMjFiOHhzNFpvTEx2dHBhRXVaZ2xTWnVDRDVlVkFuYkhYZEdtNVFGRk5kbW1TUS1MdUVyeVJtRllDNC1yMlJfV0w4OXZuajRwLVVpa050V3RhUGNJM1ZB0gHAAUFVX3lxTE5TYkZMb2loalZvYUdRc2h0ZmRpQjVfU3VTQjhNTk9mdGQyTmhNdHFxODJsMVhscGY5bk9oN0cwYXc5enFYX19rZ0VSZXhaNWJNa1BFandTMDVHMjBwcGN3NWpJemRJcFV0THRrenM2WTg5UzhJbXFrSEhSbzg4QnZ6QlM2TkN1NWJnUDNJZmp5V0pUVmcxaGFHckFEbTRiRDM4b2JLVTdlVy1LODAwa0lPOWNKUUo1YlFmbmstUVBJdQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インドは日本を追い抜き世界第4位の経済大国になったと主張</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMirAJBVV95cUxQeFNwQ0ZxR0tidmhkZmV5Nk9yLVdySVpkcFBiWGh6MThMVF9sNXc4Uld4REtFbVBqRVNwa3FkQW9UenE2WVRaaEVvdlVyaVN4XzdXRERXZFg4bjVwSnFzemxfUl90MFNOb0ZqckdIS3dMOFNqc3NCX21TR3ZCNzg4TWM5bmNCR2NNSVNoNGJOWXhYVG9XTHBpT3NzQ2VfS1R4ZG5pS2pVeFdUZWxuSEZjVk10eFFJMGpwYzJMYzRvZG82ZWJjWXdJTl9sVzQwV0txRFpPWWRCT3pwLTB0RkYwOUh4MG9yUFNwcmZJUXJlc3dCYlU2bDNjTWsxRS1EUE9BNmphc3FVYW1xbzBsdG1wWm1nNjZHaFI2OG0zdFcyUzBUc2FJTlRqRTg0dmXSAccCQVVfeXFMTXU2Nmg0aHRxMWVaVTBySmZZOW0xZ3c2N1FuOTEwWEI1blVER183WFNjZHBIMk5lSUlQOWFWZnEwQ3ZlU09ValpDa1lVa3RCS0ROTWdfMXR2aDF2VnRmaVFNc2NJS2k4MmVKc2h0U0FBWWc3TThqVXRoWFZnMFp5Ym9fcjE2a1Z3Wng2a3Z6MWpLWkprbXR1QU14Y0M1UmJMbkZ4T3Q0LW9IWHdsTXV0Z2lSd2V6SUJuY1BPbXRaS2hSY3kwZGRaQ1U2Vi14UVBLbUF2NURhYnhpNWlsZjlFc2kxMzMxc1ItanNGS3Mza3lnX2FXdGJkSi1uSzcxLUlMUUV3TV85enk4Wm9iaVQ0TzVrdXdfTFBBZmNzSmVGOGR6Y1pLUmdJV3JIVU92V2xmOU1fTXItT2lkSExJRGJJaXIwb3V0a2c4?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・メキシコでは退職年齢は依然として65歳ですが、日本では退職しても仕事をやめるわけではなく、多くの高齢者が70歳まで現役を続けます。</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMinAFBVV95cUxOb3FQYW85TG1EdXN5RGlZNmVfenlFZngzTlg5cEhGc2JuR3ZuNi1SaS1LN2VKREFfeV9CLTdnSUVtQnhfaUkzd2VScUlVWGswTVZTWnowa1hzRjdzMlp0RTF6Qld5VENhc0ltNGVDNmNHWFdqc3BEa25RYldtTi1FMlFhdlJoeWRjQzg2Z1Z6OHNuRm5Jb1BJTmMzMTI?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本の観光ブームが市場のルールを変えている</a></div></div></div>`)[0];
+                popup_4606e2d04d21e17f5a32cb64ea4a91d2.setContent(html_1a36735e1e056467a728475dbe51a5a4);
+            
+        
+
+        circle_marker_65f61c511e33d4d3f61461f63ff65b65.bindPopup(popup_4606e2d04d21e17f5a32cb64ea4a91d2)
+        ;
+
+        
+    
+    
+            circle_marker_65f61c511e33d4d3f61461f63ff65b65.bindTooltip(
+                `<div>
+                     メキシコ 🇲🇽
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_97b085d1071a0c189037532db2ac534c = L.circleMarker(
+                [-14.23, -51.92],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_d9c3eebf976374e273d4833e69b8db23 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_ffdd69da18e0b01e21e023fabc30d3ee = $(`<div id="html_ffdd69da18e0b01e21e023fabc30d3ee" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【ブラジル 🇧🇷】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi4wFBVV95cUxQd0o0LTBjMi1IelB3VUdFZGdCVUJvU3F3WnJqSTJaWlJYNEZJWkJZOGM2eDdSbi1HbGUzems4amJPZnRfUnUtbzRiaFdCRVJ4TmdCaW9oV3hrNFdwdERFbVhLbk92N3JFdEpvWTNZQURfNHRCYVgyWTNGTDExS0t5VEFhZ2xOcXZqWkZIZnhIWjNKYTRhSHBWa0MwME5MdDc0OUVOcUE1cDhEaHE0b0dNcmFwa3FrcWRwRTdSNjJGdDdCNEU2Q1JneWF0c1J6VnZsNFpIc3hKQTR4VWoxTHRPX2VsWQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・ミッションにより、病院管理分野におけるブラジル・日本・モザンビークの三国間プロジェクトが無事終了</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMitwFBVV95cUxPQnVmS2YtaWQweU9Fa0FNSGZfX3ZrN09CQ0VDTU1mcklTQTRPZlVqcG56bjhTdk4xTU9VcHAtdXFsWC1YNWJCUm5PSGJhZEd5TWY4OVhHNmpNallaV2hHeThWemVLWmIzU2pCWWR4LTZuNkJDSkZpdWthUWE4bF9PWUN3NGZ6ZVRhM2liMG5CcFBMX3JVMy1rWGh6dlZPNllZeThSTUt1TEVBcFBSVnhkQ0swZWhDUnc?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・ブラジルのリーダーにインスピレーションを与える日本の経営モデルから学んだ5つの教訓</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi-wFBVV95cUxQZzNobnNBZmVxdnh2YWxyU1RFY2tVRjVEelRrajg2Z21oekU5WVUwbG43YTVla2tjdzZSbmpacTBCVDk0R1pweE1Fb2J0YTFIUGNWVnZoVThybTBaVGszZXZienlxRXo2ZHBpdDJaZnhaUHdmSU5Ycy12b2hkYmtqSUtacHVCNWNlYUhBU2NNMmM3MVFiSHNfWGVwOGtfTVZQYnFSU296Y2RrUWZZVEVGUEFINFRZNi13bWgzblRZYXRBcE9ZZGpuSkdxbEs0My1hVFdTd3hJWXlPMEs5MlFKdjZSYzQyUzRyaVpRdXd3N18zNW9oUGpJYU51ONIBigJBVV95cUxPamFNOVdNcUMtNW5fakd4S2UtX2lsRnBSMUU5OXZRTW0zSmhMVGlhV2Nsa20zU3Jlc25pbGwwcE1Say1JVm9aQWN2akxwOUdzOTNDVGlCdVNNMTZfN1VITGdWX2lqaW5uTjZGQ1Zpek4weUFVUVFvZE81dmZ2VHUzQTlFN19ESFhDdkxBUVpzQVJ3ekxrSmhLZS1PMkU0M0xnalRCUVJnSUxjNGZDS2FRREZFVkFpZWVuUFEwTW9mZEs4alpvQ3M4UUJwOGllTm9NRHJRYzVzcEpYNlVTTHdTUXdqSDRnd0ZCYndmV1ZQRGhvclBVaHhxdkc3cFo5dVBncTVUdkJhdDJpUQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・58歳のストライカーを日本の3部クラブが発表</a></div></div></div>`)[0];
+                popup_d9c3eebf976374e273d4833e69b8db23.setContent(html_ffdd69da18e0b01e21e023fabc30d3ee);
+            
+        
+
+        circle_marker_97b085d1071a0c189037532db2ac534c.bindPopup(popup_d9c3eebf976374e273d4833e69b8db23)
+        ;
+
+        
+    
+    
+            circle_marker_97b085d1071a0c189037532db2ac534c.bindTooltip(
+                `<div>
+                     ブラジル 🇧🇷
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c3497f683b25ee8e8f0807fd3a97fb3f = L.circleMarker(
+                [-38.41, -63.61],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_1d928b250cf7eac2376c83b4c905963a = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_8a067beed150765f6afd4be5719145b4 = $(`<div id="html_8a067beed150765f6afd4be5719145b4" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【アルゼンチン 🇦🇷】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiygFBVV95cUxQb3hyODFPaXh1M1V6RlFrbUpORWlvMXBPTWtNWnZucFN4ZEMwaGJmR3NZcVA0X1o5WHdpTEFmdlF0X1AxdG1uNnc1TDdkT0RhTkU0clZNNkxYYVI2SUdqUGJkM2xIa3N1czMtQUZCWjNkdXVzTGZ4SG0tRTlwYWJCeTA1bDNnTk1Zc1lwRE1jODh1MDFWZW8yTzlzX21tdHEzTGE3QkkyMnlLSnY5ZF9lbVJuUmV2eHNwUTdrUU9hdFRBTFFaU3FmQWZ30gHkAUFVX3lxTFBFWXNxcTA4bFBBZkRCRjVvdmRmZEpZMG5Sa2VzVnhoLUFSSXFFXzVtRGFXMkdFMVNIU2RvcGVvWlBldW1zcUFlMHVBbjh0UU5NUlR6SDNSbUpFd0xmSXRMN0tlNjg3V1QtOWdUaDNKajA1UEYzVGYzd1RGcnJLLUFJeVVDbFh5LUhjNmc2bXQ1aG1hQ2NTQW1aUFl3Ql92NVEwd0xVQ2RRcHlEc09vQndHZWlGQmNKREpXblpydHh1YUYwWlNiLWxPUTAzRWJWX0xjbkkzendjN19wMkpuVWlRcU5FNQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・ナトリウム電池はリチウム電池より速い可能性があることが日本の研究で判明</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMivAFBVV95cUxOVjI3b3hyTmhsT05DZ0gzT3BCeUgtR01uTE5oeXlWUkJubXFtQVJZRllYUzlGZ29yazZxc1F0OHZid2VCMk90QXFHbWRFaFhLMWJWeGVWTE83THdZcmZ0cnJiN1Qwc3VVeVJwRWJWY3lBTHFNNU90YTREZUdsempaS1VoaGhhWFlTOXZXXzRpNUxZeWNwdU9ZQUlXNDVJYUZUTUVlMVVBbWV4SWVtSlA5WjFUNE1ZRDBHSkpzRg?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本は海上での100kWの海軍レーザー兵器実験で2025年を終える、ゴジラは震える</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxOSlAyMWdXNXRGWGUzSF9xYkdaT1hnNDNSaUxzQTZuczdhclkzeHZrR3FxZElja2RZWWc0ZEM0NjNQZEVKZ01iYXFILTBXWGxZYWt6ZkZMdllBQmdSZmtjN3NSRTREcjRBMHJnR3NsaXhpc2xzTlRGUk9IaFZ5Sk5lSTdSUjczRkdHQ0U3UEVfa2RJU1M0QkRheDVfOHV3TGVvT053NNIBqgFBVV95cUxNZ0JZa3owUTJmVm5OM1ZpcEgycno5S3pWTC0tcm42bXAwQmVhdEtxSTB0Z1llTFluT2gzaGxwWXlMVVN4dklHejRGdEo2ZkhKS1BEdmU2MkI0U19QRll4OV9wSGgxZWlwN19SWmRCdkItZXR0V1RaZFp0amhWYWRFbmZZOU9OMzU3NWcxSjhiQWZnYW8zdFhMdGE2ZUtNTEl2a1M2cTlzZjRmUQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インドは日本を超え、今や世界第4位の経済大国になったと主張</a></div></div></div>`)[0];
+                popup_1d928b250cf7eac2376c83b4c905963a.setContent(html_8a067beed150765f6afd4be5719145b4);
+            
+        
+
+        circle_marker_c3497f683b25ee8e8f0807fd3a97fb3f.bindPopup(popup_1d928b250cf7eac2376c83b4c905963a)
+        ;
+
+        
+    
+    
+            circle_marker_c3497f683b25ee8e8f0807fd3a97fb3f.bindTooltip(
+                `<div>
+                     アルゼンチン 🇦🇷
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1e82911ac28d3dfca5ea04ce2dc70fca = L.circleMarker(
+                [-35.67, -71.54],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_3dff91aecbb22b30f60655e664dede62 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_e8492d779a0a318875f5b8a2e370b7aa = $(`<div id="html_e8492d779a0a318875f5b8a2e370b7aa" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【チリ 🇨🇱】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi0AFBVV95cUxNNVROTjNlZnVyVlVGbll0TUZxQThQNGhudXA3VUZUM3EzZVgwNWlKZ3o0MW9HekdPYnJxbm1vel90aUxTaHRlVkg4NlFmLWZUbGg4dTJEbXhzQU1rZm1RSVEwNXhpQTdZMzlsMDFGbFozZlp6dGJ2NWlDSEF5eG4xbWJZSDNyOEk3cDVna0xnQUJsa1NLcjlwb1ZKLTFXNUtraGtPS0t0cnNkWFpJX19nUGY2aFB1S1RmOXNXd0Y4V0J0UThlYjd4dUYzei1XSFRt?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・今日12月31日の日本の地震：規模、震源地、被害地域</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMitAFBVV95cUxQdFFIbU1RUEluLXVfcHg2RzJMNjY2SC1ueGZadV9yTmhRXzVDdEh4M29FdEpoV2NoeXRPbk9ENjJuMjlpcGVTQmh1a1gxZ09NUDVMZnZ3SGlrb2hNN0wyTTlUMkplNE5SX1hsR01mZjl0bHoxXzJtOFpVd2FMUjktdkdEZ2k5d21vb3dMeDBrWmE0NmZLMm8ySFA1bWtEUHNIVHNGVnU4cjJtVUhzRDlsVDRhOEo?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・ボリック大統領、米国、日本、キューバ、イスラエル、パナマの大使から信任状を受け取る</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMimgFBVV95cUxQZUZxMVQ0QnFWSlZyaEdRYTBicm5xUUhvVm13YzZreTg4YkJnOGpWczBhaF9GLXdHelQ1M3RGS1kxRnpYaGdYZ0pwNlZaVVpWelRVVzVjajY4TVE4U3dvWllodVlfY2FKQzctOGdBd3pMVzIycTMtRnFDRXVNY0czZzRrRnRzVjdPRTVrQmNVeTNOTTJHZ1JQM3lB?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インドは日本を超え、世界第4位の経済圏に位置する</a></div></div></div>`)[0];
+                popup_3dff91aecbb22b30f60655e664dede62.setContent(html_e8492d779a0a318875f5b8a2e370b7aa);
+            
+        
+
+        circle_marker_1e82911ac28d3dfca5ea04ce2dc70fca.bindPopup(popup_3dff91aecbb22b30f60655e664dede62)
+        ;
+
+        
+    
+    
+            circle_marker_1e82911ac28d3dfca5ea04ce2dc70fca.bindTooltip(
+                `<div>
+                     チリ 🇨🇱
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_da2a3011b5059e769018def565a86d1c = L.circleMarker(
+                [55.37, -3.43],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_27b85115215d831b2965ab520e7c5a6f = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_12ca1f3e2c5d23aeda93ccecddbcbbf6 = $(`<div id="html_12ca1f3e2c5d23aeda93ccecddbcbbf6" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【イギリス 🇬🇧】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxNN0NSX3JJVXVSVFhsN3JEOF9yak5xMU04U01mdWFGYk9LQ3JPYVg4ejdMM01zQVI5NUJWTF9HelNaeFdNQ3dXNmNkSUZxS0NtRjZfVkNxVTFBTXN5X3YzZHZadTFIelZ0VURJMHVqdHdfbDV6WUVGSUx4NzBuSk5OY3FkUE5sU1NnU1pyTm5LdF9DT1MyX2NxZzlrWGZqM1BCUnk2Tw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・「国民は負担と格闘している」：日本は再生可能エネルギーと並行して原子力の「最大化」に重点を置く方向に舵を切る</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxOZGx3OXVteUhTWDY5c0ZWbG1PMm91RVd6SXlIcGI3NVhxZWsxMkJrRDg1bjBHbTF1eWdfQ1A3dGhlWDZIaGJmM21fRThPa2xkOUNHQUdVZFY5MmZTcGZOUDM0QkQ3U1JTZURSaHhvTWcxT2p3eFZzS3oycWMyT0VPd0dmQ2xNbV81YzMybEJxZmk3aEtjN3U2aDM2RkVQUm9QNFAxVTVqVDJPVzRPQXNUUFN3?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・Apple、日本で限定版の AirTag を無料配布</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMilAFBVV95cUxQUHllazlHN2pDZ0VST3pnOFR4aXV0OVBsNFJoOFJfb1V4RUoyZnFyY1RwNGpGQmlyc0VLVmxBOFdDb0V5UnMzbjJyblNvaExkckpOUVdrU2FFT1NXVFRiM2N3enEyTEZVNnBkRzBzZkFFaVA1VFRmUzY3TmtIc25IZmFidms2RzJyVFUxd2wtV2xTQ2NX?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本は持続可能な財政への野心を実現に変える</a></div></div></div>`)[0];
+                popup_27b85115215d831b2965ab520e7c5a6f.setContent(html_12ca1f3e2c5d23aeda93ccecddbcbbf6);
+            
+        
+
+        circle_marker_da2a3011b5059e769018def565a86d1c.bindPopup(popup_27b85115215d831b2965ab520e7c5a6f)
+        ;
+
+        
+    
+    
+            circle_marker_da2a3011b5059e769018def565a86d1c.bindTooltip(
+                `<div>
+                     イギリス 🇬🇧
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0f570fd16dd1fec091f4f8b90a050fe0 = L.circleMarker(
+                [46.22, 2.21],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_83dbb26a2d5d23d9c65a2a6e834e4164 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_b23651a54b4f396a0836abf53892f7f2 = $(`<div id="html_b23651a54b4f396a0836abf53892f7f2" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【フランス 🇫🇷】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE1STEI0aEN5TjBRaUtoS3B5dFJyWEFuQVBTUFJBV0ozY1phMGxsVG90aXBvQVE3RnJKME5vOXJvOGpMVjQtOWN3OW1Nay1oQUtGZXVlZ2FYRF9DUQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・2025 年の言葉</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMigwJBVV95cUxNRVRQZThDSm03NmdiMUNOODJneERsYjBGZ3hDdVluYko5aW5MbTFXYXdrOWk4cWg5RnM2ODFFU0JvZmoycWRaU01MZDR1dUEwMU1rWDNkZVJ0U3ZRT19zQmNSdWRiWFlDN3hRNjUwLVA4MzVBa0p6Sk91OGxfMEcta1FLVzUxLVdQTU96Ujh6N3B2TmRDMEVjUnZHd3NRckplcm5wcnJFQlVRRVBpV0diZDBoU3hxek1GR3FBNkIzNnJBZUl3czZoWmVEZ2hLOWxNRnp6bkZtNG9OSFBfR3dsZmRpOXlaMU13MHBITUVZSE03T1QtOEVtSVpCaHFMTkVVRVFN?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本は中国による台湾周辺での軍事演習は「緊張を悪化させる」と判断</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMixAFBVV95cUxPemRZRndqSmVESFJXdDlkTGp6bzdGZWhkUHNXdU1XTkJhUDAxQkVvZF9vR1J1aC12WW8xZkVka0tyTDlodU9GbGR6TlE1ZlZHdVlsRmd4N0pYNzByMm9sMy1EWnBiaEdJNDlENTlhdzF4dEJVQnZ2eG96V2tIdlRYaDR6bllaSmVsWVZwV2xpSnpvT3B5QmFDeTFva3pDX1g1V3hPSkx5Z0p5YXBBaWY3clZ1bXdjSVpNcEZZZVdqZ3BISy1k?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・台湾：中国の軍事演習は「緊張を悪化させる」と日本に警告</a></div></div></div>`)[0];
+                popup_83dbb26a2d5d23d9c65a2a6e834e4164.setContent(html_b23651a54b4f396a0836abf53892f7f2);
+            
+        
+
+        circle_marker_0f570fd16dd1fec091f4f8b90a050fe0.bindPopup(popup_83dbb26a2d5d23d9c65a2a6e834e4164)
+        ;
+
+        
+    
+    
+            circle_marker_0f570fd16dd1fec091f4f8b90a050fe0.bindTooltip(
+                `<div>
+                     フランス 🇫🇷
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5d01f980a3414fc60321ac76f2534468 = L.circleMarker(
+                [51.16, 10.45],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_a89232b06c2497108d21174f27559c32 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_58d95ae615fbb6fcc01285e9284048bc = $(`<div id="html_58d95ae615fbb6fcc01285e9284048bc" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【ドイツ 🇩🇪】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMimgFBVV95cUxQcWhIcXNtRGRmRFdScjJYZDNlYzZ2dWlXdzI5SnBfY1dsS0FWaWVzTzFrbDdTVE9Sd29lLWVIbnZRNG50Uk9zNU5HSDFjemxlSjNBR1draVFpR0hnV0RIekI3d0xFeEhJc2YyZTY2UmJ2MnY4SVJfdG1GX1FMQi1naHkzT0dXS2V6WGxJc3RBZG9uclJrX3FKbkFn?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・これが日本の新年の祝い方です</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi0AFBVV95cUxPekVPUDRVOTFjR3hVQ0M5YUxXX1hvS1I0bDJIckE1WUhVNmVvNXNmYV93eTdYcDJRcnhmNWdURU1qdWNpVHZYZ21oNlltMVg1NVpCSzMzWHJ0SWNGLUQ5MkJVRTZtckN6eFBySmNqR2lwdDJnQ3dsa0dRLTdRVUJPQlQtTWtIQzl6eTdhbGYzUFlBaV9tYjVqYU9GM3hwLWlSekFQX1VXSjhCLWRueWdBcUUxeEJKbm9pbng0WGZvMHN2QzJSTFVPSlVneW4wREF5?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本 – 高市早苗：政府首脳が「呪われた」邸宅に引っ越し</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMickFVX3lxTE9fX1dSMFFXRlJqVjVBdzJQeWVCN2VQbjl1MUJmWV9uTG0tS3dabkFXQ2t1M2RoTFNCTTVCYk9Jc2FUTnVpWUxPSHBjRTJtMmJTZXZHZWZrWjdzRFlKdXpfWnJOdTF5b1NmMlQ1MmpwVW50QQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・プレビュー: City Country Art – 手塚治虫の日本 / ギリシャ / ガーナ</a></div></div></div>`)[0];
+                popup_a89232b06c2497108d21174f27559c32.setContent(html_58d95ae615fbb6fcc01285e9284048bc);
+            
+        
+
+        circle_marker_5d01f980a3414fc60321ac76f2534468.bindPopup(popup_a89232b06c2497108d21174f27559c32)
+        ;
+
+        
+    
+    
+            circle_marker_5d01f980a3414fc60321ac76f2534468.bindTooltip(
+                `<div>
+                     ドイツ 🇩🇪
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_79022bcf0e35fcd23468fdfec917a3da = L.circleMarker(
+                [41.87, 12.56],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_d7fa11e012046f4ff421a8f4a4aa41ca = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_e6c01f2a03941836fbaa008b8f71c9fc = $(`<div id="html_e6c01f2a03941836fbaa008b8f71c9fc" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【イタリア 🇮🇹】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMirgFBVV95cUxObF9uTjhZaXM3SEFpbGdhT0gyVG1HVnN4NjduSGlGeFpCTnRkRUNiUGEzcE04X1BiMHBPMEZIM1JXZDFObDg1MXFEVi1kODFRNGVqZzR2c2Q4Q0VQRXpVT01sSVMwU1EwWWRRLW9mMjBaZjlpckRDVC00bzlmbElQekM4cVNveVp4S2wtdXRaQmpycldKdV95MUt4cFBxSGpIbWpnY1dqdlFIMHR5OHc?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・2025 年の日本に関するシリーズや映画のベストロケ地 10 選</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi9wFBVV95cUxOSmpJY3h0Q29pckRqOWUzUDdmOGktTkcxdExVZnhTVUlMUy1XWnpFTE9YR202LVk4ZHY3ZWs2alFSZm9SRU1GSy1ObjE1OU5vR3dJNTFTX21zeTVidmQ1dXdtcjNMXzVFR0YzbGlESGlFZTJEdmNqaHRTbzc3VlllUXZjOHNQMmZwbnFBY0dOejdUNDBfdFBPMVZpcW40aDZWdmpFTGNGNGhkZTVyRjBLbmp2UnhzUWR1SnUwaUJfMWZLWURPODNSanlDNGVrXy1mZzJmazNiLVdPV0YxVVVQYWxranlVNU9Gb3VvVnI2RWlWUzFVYXQw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本、再生可能エネルギー、原子力、水素に焦点を当てた新エネルギー計画</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMilAFBVV95cUxObEtnWVQ4ZUtLbFRnRTVZVEhVN2U0V1ZuSER3SUh3ejEwb2dZMU5TVVFWRmQ1eXA0dVE0R3JuM3FISDd5d0hnY1dnYmhkQjZueDhJU0VnUmNhQlNfVHVyb2ZEUFVheWRfZG03MWM2YUpNckRRems0d09mZXJqdXZBRnJUQTBiM21kVGNJYlA4QUVVb1Bm?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本では金利と負債の曲線に沿った利回りがさらに高くなる</a></div></div></div>`)[0];
+                popup_d7fa11e012046f4ff421a8f4a4aa41ca.setContent(html_e6c01f2a03941836fbaa008b8f71c9fc);
+            
+        
+
+        circle_marker_79022bcf0e35fcd23468fdfec917a3da.bindPopup(popup_d7fa11e012046f4ff421a8f4a4aa41ca)
+        ;
+
+        
+    
+    
+            circle_marker_79022bcf0e35fcd23468fdfec917a3da.bindTooltip(
+                `<div>
+                     イタリア 🇮🇹
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_590e8046258a0ac096364acca2cf5121 = L.circleMarker(
+                [40.46, -3.74],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_9601c025907aa189f4b605c4045d342e = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_216ae51f3d6d37d6a50b350788123a3d = $(`<div id="html_216ae51f3d6d37d6a50b350788123a3d" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【スペイン 🇪🇸】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMioAFBVV95cUxPNGExenVuYlloTXNqbEx2cnltN212YlM4SzNBRF8zN24wNHRna25aUFFfY3J1Ui01U2RIekI3cm5FaHdxZi13NEJGdzF2dXVuZURETzE4TElwM1BGZmpKWEJtOFh2UWNqSkV3SzdIUDVDMFZvM0g5Vy1IT3FLVDdfajkyZDVneXN6a3RpeEQxeUdqdTBVTmVOMGk4akVxQ3VF0gGmAUFVX3lxTE9WM29oNDBvbFBYdVZpMjdZMmwwdXo4WWdpU0J1cVRmMnU1by1Ra2JFTDFjczIwWXM0XzI3Nzdrd0pzS0dfS3Q3ZUYzRXdzODlXTmVBRTRsV2NFaW9kSm1nU1FsZkVFQ3RVd2VDZHZCRnJvZzQwUXViaThoVjlzRHJwRDRDdUM4cVpVZUZLRFZlTG1tZ29CMjhhVEdnU1laVnhqc1luMmc?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・スペイン人の中には、寿司を食べて感染症にかかったために日本の病院に行き、健康についてフィルターなしで意見を言う人もいます...</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMitwFBVV95cUxQVHFHX1lKMGtaNWNIVUxaZ1NwLXlOOVotVlF4RE9qNGF3cUhBWFZGTkFVQjNzTW5jWXEyR0ptN0VPZFd1azdkNl83eDFHakQwY3NrRS1YTWFHdjBYSXozOTExZ3VwNFVKUUt2X2lWajBIQnhrZGxjQVZxVy1fYnV5RnN5RmZzTDVyNF9Cdy0yamNYLVdrRnNaa2I3R0FEeWh2VkZiVVhEWUU0bF9yeFMtRVlMNUZicFXSAbwBQVVfeXFMTkgzTFJHM1hVQTFJSl9Yb1BTZ0NLbDJTSVN2enNqTkJmeFdfeEhQa1R2YVl0ZURSSkg5clBRdEE5X0plSnoxbEZtOTJvWjNEekdFYTdpMHdOR3BLVDQzcnFvdU16ZXRHNmZTaW5ReGtDVWVLSDRHZXRJX196c25NTXJoajVVdTJqTlAzaEhTY09GWVBOUVNhRWZOWjhlQ3pkdmp4N0xKdnlDamlRbjdwMWhBaEkwRnJLXzYyR1k?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・中国が要求するまで、日本は20年以上にわたり自動車総販売台数を独占していた。</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMinAFBVV95cUxOb3FQYW85TG1EdXN5RGlZNmVfenlFZngzTlg5cEhGc2JuR3ZuNi1SaS1LN2VKREFfeV9CLTdnSUVtQnhfaUkzd2VScUlVWGswTVZTWnowa1hzRjdzMlp0RTF6Qld5VENhc0ltNGVDNmNHWFdqc3BEa25RYldtTi1FMlFhdlJoeWRjQzg2Z1Z6OHNuRm5Jb1BJTmMzMTI?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本の観光ブームが市場のルールを変えている</a></div></div></div>`)[0];
+                popup_9601c025907aa189f4b605c4045d342e.setContent(html_216ae51f3d6d37d6a50b350788123a3d);
+            
+        
+
+        circle_marker_590e8046258a0ac096364acca2cf5121.bindPopup(popup_9601c025907aa189f4b605c4045d342e)
+        ;
+
+        
+    
+    
+            circle_marker_590e8046258a0ac096364acca2cf5121.bindTooltip(
+                `<div>
+                     スペイン 🇪🇸
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bca53ca96eede7e6813100eb5ef1ac9c = L.circleMarker(
+                [52.13, 5.29],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_a850a2a6c2e232e4ff25eeb791d11b6f = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_4e3a2b498acdc7898a22ae5b94c42a84 = $(`<div id="html_4e3a2b498acdc7898a22ae5b94c42a84" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【オランダ 🇳🇱】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxQbl9sSVRBLUFyQ2NrZDFyZ2FHcWdsQmVvaFZCY2k1Q25qTEVBMXNtNkNSWGFtRnVOcTJVN284WVV0OG8yUGVQcHl6QUxqeG1DTmZrb1NEWHRJVy1tTzNSWjZFSWRjYkZRM0J6NE9FWWxBbjYzUWlpWGhuclBERHQ3UENwTEJjVFlyNmtZQWJNSkkyU3FvaEZ6N2Jha0RhU0s4TzRPU294SksybjhZY0ViREZn?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インド経済は日本経済を追い抜き、ドイツも視野に入れる</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMixAFBVV95cUxNU3NZWWExSEJpdUlKT0ZzeXpuTWl1N3RrV3RaU3NOOGVLcGxDWVFlNE85MjVIN0Z3bEhhaDRSMm5jSGhVQ0J2RlhCRVhia1NvVVc1S25wS3N2ZmRQVk0zZy1LUk14c2JKYW5BdmNXeEFhSHZ3Y0tPcmRZN19ydExhSjROUk16SmpuVmpaTWlwN3ltZk9lZHJHVWd4Q0hVWDYycm1fZXlzVmN5OG05bWhxNU41OTNPaFQ1ZmVrMWtqQWVZOU8w?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・三浦は止まらない：史上最年長のプロサッカー選手が日本の新クラブに加入</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiswFBVV95cUxOZGJyc0pWcHBxRFh0ZmlZbmVrRjJydVA2aFpfbHozQ3JKc2VmcUhBYjFKbG5Mb1FOS0hhNEl0SWVHVnoyZVZQZW9JR09LY3F6aVNSX1ppY2dRZHRUNjRpUjVaRHdZQ0ZWdVZhWEZUSDF6VDV4ZDVsb2xZb09PVHp6YlliUUZMLUFjNnYxZEpid0F5emxYRWhCbV9BTG9EaWg0SVBNSUY3YklvaHBtTjhxU0ZzRQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本をテーマにした2つの新しいカシオGショックウォッチが途中でリークされました</a></div></div></div>`)[0];
+                popup_a850a2a6c2e232e4ff25eeb791d11b6f.setContent(html_4e3a2b498acdc7898a22ae5b94c42a84);
+            
+        
+
+        circle_marker_bca53ca96eede7e6813100eb5ef1ac9c.bindPopup(popup_a850a2a6c2e232e4ff25eeb791d11b6f)
+        ;
+
+        
+    
+    
+            circle_marker_bca53ca96eede7e6813100eb5ef1ac9c.bindTooltip(
+                `<div>
+                     オランダ 🇳🇱
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f91f5c1e90e5d40bfc5371766d5ae111 = L.circleMarker(
+                [46.81, 8.22],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_47ce7b37f725e827a77b3e68e697081a = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_90f6e1fa72c0a9c10c8f0cc98fdf3023 = $(`<div id="html_90f6e1fa72c0a9c10c8f0cc98fdf3023" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【スイス 🇨🇭】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMingFBVV95cUxON1hyTWJ6M2hGdm1PVVByTTVBQ2xRNVV0MXlraFgyejRhT2Ftei04LU9CN3NRUUYtUVBLblVzeWhWRktIUWtKY2ZyNWFqYWNqUzhkQlBlUHhfYjZCclM0aERBU1J4U3BpZ2dJUDRtRURZZmlvWDVaSXF6LTZSTlJTQkJUdVh1ZXo5TXhuczhKM1dwRFJraGlqWTRJNS1pQQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・AIのおかげで2025年のトップ株は日本から</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMimgFBVV95cUxQcWhIcXNtRGRmRFdScjJYZDNlYzZ2dWlXdzI5SnBfY1dsS0FWaWVzTzFrbDdTVE9Sd29lLWVIbnZRNG50Uk9zNU5HSDFjemxlSjNBR1draVFpR0hnV0RIekI3d0xFeEhJc2YyZTY2UmJ2MnY4SVJfdG1GX1FMQi1naHkzT0dXS2V6WGxJc3RBZG9uclJrX3FKbkFn?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・これが日本の新年の祝い方です</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMingFBVV95cUxQdC1vS1pVS1lfZ2NrVDVXTXhDdHBPTnhsZXNYSlpUbS0xZGpkV29PeDBsVHZnU183eU15VkdwM3k2QlNZdHZKWXB6MUxNemVxaU9JWlZxMXROVktuVXMyNGVEV3N3Q0wtbUFJOGNNeE10LVhQalJubGJ6OVItYk96Z2ZJOWRwb21ITEY2NUcteVhyMVNPMFpxcnZlaTFXUQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・星野リゾート、日本に8つの新規オープンで拡大</a></div></div></div>`)[0];
+                popup_47ce7b37f725e827a77b3e68e697081a.setContent(html_90f6e1fa72c0a9c10c8f0cc98fdf3023);
+            
+        
+
+        circle_marker_f91f5c1e90e5d40bfc5371766d5ae111.bindPopup(popup_47ce7b37f725e827a77b3e68e697081a)
+        ;
+
+        
+    
+    
+            circle_marker_f91f5c1e90e5d40bfc5371766d5ae111.bindTooltip(
+                `<div>
+                     スイス 🇨🇭
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8cdaa5bf3f68248d36195cd1b206ae15 = L.circleMarker(
+                [60.12, 18.64],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_17a63cd46a3a643b2d901d88ae13d744 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_b9ea869b8fae401cd7e92a56c68221bb = $(`<div id="html_b9ea869b8fae401cd7e92a56c68221bb" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【スウェーデン 🇸🇪】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMijwFBVV95cUxQajJWOUZkWHNncFVLcloxZ05EakNURjc1dFgzQXlGRVJNbXBDMHRFR1E1ZHdDMXFSWkZ0WG1UMGVwVGVIaFR6N0E4bEZqRFd5Y0J0eWllVTV0bHNJQWYxN29BelROeTNNY19FazdBcDhWOFFOOFdMSHN0RVhHS2NNeDVBU0pwTkpMbk1YOXdrdw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本の株式市場は今年も好調だった</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiiAFBVV95cUxPdV92WFJTWmgzdWVpbVc2bUdYbzN5dnBhcDNad3V3QWlwUGdBOGp1RlJoUC05TWU4QzJSd0dJVEdSYlM4bWliZ1FpZjlaNFR5WlRlbFUxQUNOc2tEbC12LVFjUEZpRko0WEQ5NXdBbXNmZEp4ay1odUlWTHZldnE3d1JGTTJKVEFs?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・FPTは、商用チップの最初のバッチを日本に輸出します。</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMilgFBVV95cUxPdW9EWkVfTklhMEZJSXFVc3V4dzdpRURCQUJDeUNKMmgzWWRmaC1NRW1ibTNxYTdKdi1SMGJqNlVzUDlTQ0FwQ1hpU1l2VEN2MXJrTzUtNEE5MEpWQU5qOFREWks2bGlXS1RuN3BRVkNmTDN5VER5VWpsQUNSYlBuc2RyUFZPTUdRWk1Yenp6VmpMZ2NYU2c?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本の首相がお化け屋敷に引っ越し</a></div></div></div>`)[0];
+                popup_17a63cd46a3a643b2d901d88ae13d744.setContent(html_b9ea869b8fae401cd7e92a56c68221bb);
+            
+        
+
+        circle_marker_8cdaa5bf3f68248d36195cd1b206ae15.bindPopup(popup_17a63cd46a3a643b2d901d88ae13d744)
+        ;
+
+        
+    
+    
+            circle_marker_8cdaa5bf3f68248d36195cd1b206ae15.bindTooltip(
+                `<div>
+                     スウェーデン 🇸🇪
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b02b1d94ffe119ac16d6c8c3a4f6a76f = L.circleMarker(
+                [60.47, 8.46],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_46abfce3b7c2e0c22ebfd902a933a66f = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_9d1e2703ff911c992e7dff4be96ff444 = $(`<div id="html_9d1e2703ff911c992e7dff4be96ff444" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【ノルウェー 🇳🇴】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMinAFBVV95cUxNSEF6WEVvUGYzWHh5LXJ4OVF3VW5UOGRuck5FbW5oU01na0lXRC1yclNJeXFxRHpDRDNKN0swSTFLVW5RSkFna1Zmbl96QnNGSXFnRUJveXMxWkM3RVVQdTEyUFFSUmpEemt5cy1uY2xyeFNIeThRLTJWWXBlZm1ZNERnMGpWak4wTTFJbFRXcjNyNzV5UUhKaEZOYXc?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・年末最後のアジア株式市場は下落</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiogFBVV95cUxOdlY1QmFHb1RxU3dDQm1UYThJeEdQeHAxUnNRUGp1YlJLNlJRTll0dk5Kazg1bUxnX3hTaHlCcGpVbFRhWjRjbHkwdWdWVzJPa0RVM2FOZ2ItQmZibzJGSFI0SWxrdEIwSGVTa3dRcTVEQ0V1MFRvV1VzS0psUG5IWGhlTEZ3YjRKVU03V2Z4NWhsZXZIeDVOdEZjbHp5UnZBa0E?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・スバールバル諸島を平和の国にしましょう - そして北欧諸国が団結しましょう</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiogFBVV95cUxNcW5xaTZnZjVqeU1MYkxONGVrN0F2TnFjTDUtWmJNaHVPZjRfcGpMRHNnaXI3Z2ZteVkzZWJFT2F0LWxXN1BJNG9VUW1QeEJVUzlITFA0V3ZwSTNWUVU0MUFLM3FBS1hGN3ZpR2c1bUhaT1R6U0x6YXpWdW5xSEh4a0h6U3VLMDM2ZXctZDYtR2ZyQlI5NjhpcndkVml0c0F1Y0E?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・致死性の真菌が世界中に蔓延 - 次のパンデミックになる可能性</a></div></div></div>`)[0];
+                popup_46abfce3b7c2e0c22ebfd902a933a66f.setContent(html_9d1e2703ff911c992e7dff4be96ff444);
+            
+        
+
+        circle_marker_b02b1d94ffe119ac16d6c8c3a4f6a76f.bindPopup(popup_46abfce3b7c2e0c22ebfd902a933a66f)
+        ;
+
+        
+    
+    
+            circle_marker_b02b1d94ffe119ac16d6c8c3a4f6a76f.bindTooltip(
+                `<div>
+                     ノルウェー 🇳🇴
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c614d7acd58a09e24f59328141da9941 = L.circleMarker(
+                [61.92, 25.74],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_f19157c3887b8827069ecf1b52c1778d = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_8027f6c39b9861d029014a2b9244505e = $(`<div id="html_8027f6c39b9861d029014a2b9244505e" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【フィンランド 🇫🇮】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMifkFVX3lxTE83R1FUbjVwRVVkR2RZMGFSOUR5VUVxcXdGM085XzlPTXZOU2p1WXpzWGt6S2ZzTExXVGx6TXpBQmtBbnpZNHpUZm9RVHFkV3hfWFEwMVhtaS1wc2pqRG9mNEQtVGFxNkNSS3RlSUh5bkFWYTM1LURyYkI4b3J3dw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・アジアで戦争が起これば日本も巻き込まれるだろう</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMifEFVX3lxTFB6dklqZEtIZHBnN2pUMk9yVmNET25xQ0VhRXI0RE16YUhMZVR2UjdGbnJfWExsT21rNE40MURGVnZtZGh0QVZiSkJaTmRPd2dzWUlRRE5sNGUyNFJ5cHBsMkp0VzNMYVBkR3plUjJKSldZZWxpYlZEYnk3dEU?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・中国は大騒ぎになった</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipwJBVV95cUxQUkg4NTZxaG53UnBlTHFDNmdUOGtsZmVWSlJkRlIyZXB0VnlvbHU4RHU3RndiWjRISjh2YnJSZy1GMDllM1pGc29TZDhTcFpsbU1hd1pRcmNjNEFEcXJ6YmprZlhNTDBHMUtaVkdjNlNyQ1lCT2t5R0JkU0ZBZkw1NlY5T0NCSXlTOUtWZkV2TVBSTHNVcy1IdzNXUFJ0WVNNaTJUMDgxWUJrZ3BJMDJKMFJlOENYQUxkemE4UnVJVU9ESUdJNGs4REtaM2dsZ0tlRlZkajJ2d1ZCWHlIbTBrR0dEXzYtOXNpR1VaaFhJb181amprUHJUdlg4VExlQS1KdGdfdGU2blV4blRMY2VmaHNJYWxpLTZ1eG1hYkV4bWlfelhTUUZJ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・2025 年にイタリア、南アフリカ、日本で観光ブーム: 観光回復を牽引する主な目的地</a></div></div></div>`)[0];
+                popup_f19157c3887b8827069ecf1b52c1778d.setContent(html_8027f6c39b9861d029014a2b9244505e);
+            
+        
+
+        circle_marker_c614d7acd58a09e24f59328141da9941.bindPopup(popup_f19157c3887b8827069ecf1b52c1778d)
+        ;
+
+        
+    
+    
+            circle_marker_c614d7acd58a09e24f59328141da9941.bindTooltip(
+                `<div>
+                     フィンランド 🇫🇮
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_428f0f261cdc6f63d2aa10c0120c22fa = L.circleMarker(
+                [56.26, 9.5],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_2176c3003e13c44d3b8f466b38b149ae = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_56d90667e27e8ff5586c38f66c42f5a4 = $(`<div id="html_56d90667e27e8ff5586c38f66c42f5a4" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【デンマーク 🇩🇰】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMinAFBVV95cUxNSEF6WEVvUGYzWHh5LXJ4OVF3VW5UOGRuck5FbW5oU01na0lXRC1yclNJeXFxRHpDRDNKN0swSTFLVW5RSkFna1Zmbl96QnNGSXFnRUJveXMxWkM3RVVQdTEyUFFSUmpEemt5cy1uY2xyeFNIeThRLTJWWXBlZm1ZNERnMGpWak4wTTFJbFRXcjNyNzV5UUhKaEZOYXc?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・年末最後のアジア株式市場は下落</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiogFBVV95cUxOdlY1QmFHb1RxU3dDQm1UYThJeEdQeHAxUnNRUGp1YlJLNlJRTll0dk5Kazg1bUxnX3hTaHlCcGpVbFRhWjRjbHkwdWdWVzJPa0RVM2FOZ2ItQmZibzJGSFI0SWxrdEIwSGVTa3dRcTVEQ0V1MFRvV1VzS0psUG5IWGhlTEZ3YjRKVU03V2Z4NWhsZXZIeDVOdEZjbHp5UnZBa0E?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・スバールバル諸島を平和の国にしましょう - そして北欧諸国が団結しましょう</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiogFBVV95cUxNcW5xaTZnZjVqeU1MYkxONGVrN0F2TnFjTDUtWmJNaHVPZjRfcGpMRHNnaXI3Z2ZteVkzZWJFT2F0LWxXN1BJNG9VUW1QeEJVUzlITFA0V3ZwSTNWUVU0MUFLM3FBS1hGN3ZpR2c1bUhaT1R6U0x6YXpWdW5xSEh4a0h6U3VLMDM2ZXctZDYtR2ZyQlI5NjhpcndkVml0c0F1Y0E?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・致死性の真菌が世界中に蔓延 - 次のパンデミックになる可能性</a></div></div></div>`)[0];
+                popup_2176c3003e13c44d3b8f466b38b149ae.setContent(html_56d90667e27e8ff5586c38f66c42f5a4);
+            
+        
+
+        circle_marker_428f0f261cdc6f63d2aa10c0120c22fa.bindPopup(popup_2176c3003e13c44d3b8f466b38b149ae)
+        ;
+
+        
+    
+    
+            circle_marker_428f0f261cdc6f63d2aa10c0120c22fa.bindTooltip(
+                `<div>
+                     デンマーク 🇩🇰
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a79b1cd87d9d91147e0009a3ca4f3451 = L.circleMarker(
+                [51.91, 19.14],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_ef3c25e0fe4fd579286782ff2d39ece4 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_a7afa5b8496c18b903682d83c7a0a177 = $(`<div id="html_a7afa5b8496c18b903682d83c7a0a177" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【ポーランド 🇵🇱】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi2AFBVV95cUxNaGxjc00wQk42Z1l5RHBiaTBlOUswVnBBX2FseVhPUlB2dzV2ZlFQV3VsdGNSckpxQ1Fra096TlhZWlkyeDlyZWVEZlNFYjNiSTJheElZbUhMRGhOajNWRjZYYllIYlZWQ3U4ZG1jRHdaMFZueDFMYUJrS0VqdVpZUTVjTFQtWmZsUDF2TEdycDlLMXVwbS00RXBxdUlpWjlyVlRJb2pHSW12Y0VLbWtwMk9vN2RuRlJBbHBDbjA5cDZXakJuSDY2Nl9lS1FxVGpKRWJvQmFnY20?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本は19兆ドルの国内投資で人工知能への戦略的入札を開始する</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMijwFBVV95cUxQbE9hM2hlLVRERFRCUExxaTNCemdyVzY2WDdrd29aNE9SN2ZWOHotZi1oUmJmLW1EV0ExM0ZOeDZfdWxZR3lsbGNKalNHTWNLUTdvZ00xUmhUeDRNNlpERXl0OG5PN3F3bkM3amk5SUEtOEcxY2w2RnJ1Z2Q5NmtMbkdPamQ1UWxXekJuUzVuTQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・台湾を巡る戦争は起こるのか？ 「中国には言い訳ができた」</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMif0FVX3lxTE51N1Y3NUlEd3VwWHVELXBPcXlLb3hfYW1fUU5ITmdESS1rVGJMMGc2Q1puMVFXRk1PTkEwQWNnNzRwOEJZbXdZNmhNNkpUWHNOVkhGc3NBcU1HZ08ySkV5azBFUG5Ya1F0d1hpRDRKR2xuLWJtQWdmX2l1VTB4TVE?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・衛兵交代。日本はもはや最大の自動車生産国ではない</a></div></div></div>`)[0];
+                popup_ef3c25e0fe4fd579286782ff2d39ece4.setContent(html_a7afa5b8496c18b903682d83c7a0a177);
+            
+        
+
+        circle_marker_a79b1cd87d9d91147e0009a3ca4f3451.bindPopup(popup_ef3c25e0fe4fd579286782ff2d39ece4)
+        ;
+
+        
+    
+    
+            circle_marker_a79b1cd87d9d91147e0009a3ca4f3451.bindTooltip(
+                `<div>
+                     ポーランド 🇵🇱
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e753185b0d15b54c72a33a63c7518c04 = L.circleMarker(
+                [39.07, 21.82],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_c102eb9a402de6fe9d28c9c0b3dde5a7 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_4bb0df1bcead4604512336b9ff17cf0c = $(`<div id="html_4bb0df1bcead4604512336b9ff17cf0c" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【ギリシャ 🇬🇷】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi2wFBVV95cUxQVDVQblJIR19FaVpkcTg0eVhvN3pXQm9Kcm1fa1Z5Y3lJN19HU2cyMng4czV5MU9BYlc3MHB5UlFFakV2QVRwWG9MZHJJVXItSUxqdDNJLUx2TXNqVXllTVVKWmxzdi1lX3pLRUx5aHl2Vm8xRldDRndTSUlTZUtlUGhpYW9saTl6azVsQklIWFl4azZYcFcyeF9nTzZ2TWdtR3RZemVYWm1kYnJIU0Z3YlljUkZ4d09aUnUtV0N2N1BhS3FxRExWc2JJaWxoVVJFcWx2OEFNSW9OWmPSAeABQVVfeXFMT0FqZU1DT01XZkliWXVmd282R0FBU0ZQSzRfUERKbkVITjZkZDNkMHdYbUtGdmpidUs3WVQ5cXFJWHdoeDQzUEsxWVNVTE5PU2phYVFWZWQtMXZ2WVpuMXk1RGhlSjVDVUxDcmhuNzdHM3pqQWk1ZGZEX2QxRmpsU2t3X2JTdm1STFEtWGFXay1QT0VLbGdGU1ZPMmtQWVJwTmVyNUtyVldaUmFPNjZqMWV2TE9mYnNOQVl3UC14SlNoYXU0aDdRcGhBMnRWa0tVVjBQckJtd3BjYUZqbVBzR3k?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本周辺の海洋における憂慮すべき変化 – 漁業と気候への影響</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiwwFBVV95cUxQRUZsRzBxbXBXU3FwTjUzVUxEc2pEaGVzUnlYVERQM2h1WGJlNTcwci1obzRURG1YS0szMVhKTWYta1FzcElvTHZtbmZzM3lNR3I2NnJ4SU1EM1RXSi0teWREWlpqeDlZaHF4b21KM2FORDNEeDdBUWc3emlaTnh5aFFBdnl0bWExOGdFb2M3NjFfbV9ydXhudFF4Mi0zZzB5UkJOMW9LdFdUbkJGeXhGaWlxcnRzYkxqbmYtNG9VcVhYWk0?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本周辺の海の急激な変化</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMidkFVX3lxTFBSM1NOcXd6Tzh0aVNWVTdCTFV6QjJfUFJfTVhUdGpiMi1ZNWRJX0xsR0JUaHJtbnJIdEJMc3pnbnRjXzVEYUtWREIzZWp5Zlg3ay0wcTJtdU1zVHZCV2FaTWxXSjZnSkNEUmU4Z2JqMDdjSmpyVlE?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・Apple、日本で限定版のAirTagを無料配布</a></div></div></div>`)[0];
+                popup_c102eb9a402de6fe9d28c9c0b3dde5a7.setContent(html_4bb0df1bcead4604512336b9ff17cf0c);
+            
+        
+
+        circle_marker_e753185b0d15b54c72a33a63c7518c04.bindPopup(popup_c102eb9a402de6fe9d28c9c0b3dde5a7)
+        ;
+
+        
+    
+    
+            circle_marker_e753185b0d15b54c72a33a63c7518c04.bindTooltip(
+                `<div>
+                     ギリシャ 🇬🇷
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9bac74ce3b22ab8d81c23a536161d9a9 = L.circleMarker(
+                [61.52, 105.31],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_9fcd6688d19bd975551bfa935848b81b = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_bfed2932a97c01d26812335b274025b9 = $(`<div id="html_bfed2932a97c01d26812335b274025b9" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【ロシア 🇷🇺】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiV0FVX3lxTFBiTzV4X0JONGdPQzlPajJLZ0tVRGx0b3JqaF9FaXh3ang1ZDk3VGRFbEJ3RDFIWmxybEIyejROY2doNGRqUGhqdGZ5RTdhdWQ0UXQ0NFRGMA?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本の日本語学習者数は過去最高の29万人に達し、そのうち65％が留学生</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi1wFBVV95cUxOaGcyRDJIOFgxdjZUUEpfSzRlYVpHdlFLRkFRekVHRUliMGZVRjdlSXVWWjctTms1TXJHcGxqaHg5WFk2UUlrZGdyMGpOUGJjLUg0NnZVNmtELWhwVkt3OHBQQmg0d2k3NzlEOVN5RVNmV0JWcFJHT2dJWk5mTkFySDNaa21CWEtPZmN1TkVlVTRzZ0xMbW1hS2dfMmNsbG81SGlhOFB6VzlqalVDQXRPd1FkbGFXbENUMzBVQnJVYkphZHNBOG1fcFluR2tDTThjVWtzSElzNA?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インドが日本を追い抜き、2025年に世界第4位の経済大国となる |もしも | 2025 年 12 月 31 日</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE55SWNRZmxPSDBOMW83LV9KeE9HeGVtVHBGOHZkQjRUV3FGcnlvRGdkQVZSZmV5Q0R6N0M5NmRtOUttRml2RDM5eVNUM2lZWUdMUWRFbDRrTWZYTW5BR2JGTjRtODZpc3IzU2t0endR?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・恐怖の手中にある日本: 冬に攻撃的なクマに何を期待するか</a></div></div></div>`)[0];
+                popup_9fcd6688d19bd975551bfa935848b81b.setContent(html_bfed2932a97c01d26812335b274025b9);
+            
+        
+
+        circle_marker_9bac74ce3b22ab8d81c23a536161d9a9.bindPopup(popup_9fcd6688d19bd975551bfa935848b81b)
+        ;
+
+        
+    
+    
+            circle_marker_9bac74ce3b22ab8d81c23a536161d9a9.bindTooltip(
+                `<div>
+                     ロシア 🇷🇺
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_be4eb307f77b22fd116f63d593b51fe8 = L.circleMarker(
+                [38.96, 35.24],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_63721fac0882bc73a703b4a2391f65c2 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_089eec7d76129827cfe8821be741b153 = $(`<div id="html_089eec7d76129827cfe8821be741b153" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【トルコ 🇹🇷】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiwAFBVV95cUxQdlhJakllTllFT0hSVUV2UXRmTk5lcVByUzlhaVJocmFQV1I4Q3FpT0FKTXgyajF3SE9kVmFZenh0OWdlTk83Y3ZudC04X1hyQXkwU09aUVFLZ3ZlbllTNVNLTUJ2R1FORmxULURIT0RveUNua1FGNWhOQkxhYVBiYnBBYTJVMEtIUmVRNFJ0dTNJU0QyYTZEdzloS3hLX1ZFbFFRcjVqRUtHT1VRQ3JVUXAzMjFEdWhicGZ5aHJrUkY?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本が為替レートに介入できるようにするために米国と締結された協定に注目が集まっている。</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipgFBVV95cUxPdzNEZnRxS0s4eVNqYzdNamNtTmo5cjk3bHdQbHY5VFQyaUpYNDZZX2Z2TU8yRlZRNFNVZ3BPQVk5V24ycmhxMEdETDZ4WGw3MU9xT092MTFxc3k1aUlaUTRXcGVKMXZTVGZHaS1WSjdJV0JCMHBjMWtaUjMxdTR4blpfS0stZzROYWFINWUyVWFNbkxKYnNxZTZsWlZlOUdkVXFRMnd3?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インドは日本を追い越して世界第４位の経済大国になったと主張している。</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiygFBVV95cUxPS3djamU5REdYeU9FSXNadW1PUG5LalVybVNDQ1B4U2tKdzJnUElPZ3Rhd2taZzhhZFZwZlBUTVIxb1FyaERBV0p3amlWMUdXLTVBQU44eGk4ZDNIeUZmT01ONTFFYV9DVEpNeUhOUGhrQTVaaFV3YmZ6Zm5TZWpQMjFxOVg4NVhvMTF3WmlUY2JJUHhJc2k4LXBZVlUtVl94ZWRHUDc0ZVY1ekFzY0RZYm44RGxRQ1pOY3BvWXlpRmlxdnJPeGNDMHZn?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本は、19兆ドルの国家投資をかけて人工知能への戦略的取り組みを開始した。</a></div></div></div>`)[0];
+                popup_63721fac0882bc73a703b4a2391f65c2.setContent(html_089eec7d76129827cfe8821be741b153);
+            
+        
+
+        circle_marker_be4eb307f77b22fd116f63d593b51fe8.bindPopup(popup_63721fac0882bc73a703b4a2391f65c2)
+        ;
+
+        
+    
+    
+            circle_marker_be4eb307f77b22fd116f63d593b51fe8.bindTooltip(
+                `<div>
+                     トルコ 🇹🇷
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bb73a7d8173be861e2483bda6435be77 = L.circleMarker(
+                [31.04, 34.85],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_02f800a26eed4caf03932327b6857b06 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_8d7012d4d1275b95fc5d232649cf6fd6 = $(`<div id="html_8d7012d4d1275b95fc5d232649cf6fd6" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【イスラエル 🇮🇱】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMifkFVX3lxTE9qZTBabVNjbkVZaTViQnE0eEhQaG5ySmVvUkllN3BNTHgyRFZPLXRPX0plUGptVzd0S1d2akhMREZBQjlsUHdxUVFkSnFkY2I4SWtKNjBpX1hDYXRyajlNcUs3dEV0LTlkTTN5UEZBZG1wclFUeVI0MXdLUDlCZw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・中国との緊張を背景に：日本は前例のない防衛予算を承認</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiYEFVX3lxTE11THMtNmFCU01VWUg2V0h0aFY0bHBUSHR0VXl2bWhIakNyMTMtemdyZ2tHakpZQmpfaTFDYmhYRmpIcUZlbzV1UE9vMmdwZGdWdXJvQ05yOVl6YzdzTmJuYw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・米国は台湾に前例のない支援を送った</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiqgFBVV95cUxObXBqMk1Cb1dRWjl4S2puaWlOdW44VjRwRnNrOERrb1dGMVN1T1F2LTBfR19EblhOY0llTEp4NmktLWJQc0JTdjUyclVXNmdjS1hlM0p0a0pPTjIxSEtpVTdPemoyZm9RNmszMUxoRTBEX3NfWVdXczljMEJRWUI5V1U5UWdBZ2liMzFGMkxrMGo3NkRuWDdMdWNMYjdhT2NqODV1aURHb2xldw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・軍事と経済：米国が中国を倒す唯一の方法</a></div></div></div>`)[0];
+                popup_02f800a26eed4caf03932327b6857b06.setContent(html_8d7012d4d1275b95fc5d232649cf6fd6);
+            
+        
+
+        circle_marker_bb73a7d8173be861e2483bda6435be77.bindPopup(popup_02f800a26eed4caf03932327b6857b06)
+        ;
+
+        
+    
+    
+            circle_marker_bb73a7d8173be861e2483bda6435be77.bindTooltip(
+                `<div>
+                     イスラエル 🇮🇱
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ce3f8402a0c5aafc143b693508f75b98 = L.circleMarker(
+                [23.88, 45.07],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_e7cce3ca942c578e2118a501f30b8841 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_6c4e01f80d2dafc1f1c663c5535a010a = $(`<div id="html_6c4e01f80d2dafc1f1c663c5535a010a" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【サウジアラビア 🇸🇦】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMivARBVV95cUxPWjQwOFlIOVB0M29SRmhucnc2Wl9lX1JRM3c1WVliRjlyNzIzaHEwV3lRcXhIM2ZZS3U1UU1NMGN3azlXRi1hLXlTYWNOak5xcGRGQy03UzcxQV9RcHhBZ0l5a0IwUmg2UHJvQXM1Wm1scFUxenF6M1F2OFhGX1U2OGxkRy05akV1d3dPSndLOGN2TUk2OUpsY2UyQmZKdXZWQVRFc2FyM3UxUENtenc2dGlBT1pSVjJmWGNrcThxb3A5R1dwZlRaNUl6VVFjRlBWSndtR3NwUkFBU3czaUhycVhOVks2YWdtWDFicm81dW53Y2otMUk2bC11NDQ4Snpja0RBcGFQbFV3UXhLaHdVejBHYkZVSHMySVAzR3I5WGpvZGZkM2hEMTNXb2ZNM0hydWhhUHhUOFBLalhrX1Q2WkE4SEtGaTV2MjMxT012cVh2RXJKWVBueWRRSXdibjJIdUlONWhTdERNZGViWEsxQW1oS291S3lLRXlTZ2pwYmR4V2hidFM5YzhhOHJrTDFEb29NcV9DbjNuY25BUUNlQm5MNkpLaTJPYkd5Wk5xQ2tpal9wMlE2dEFGWnU1dGpiTDNJN0ZIRzgtTnp1Wjg2RUhsdExWWEJIXzkxWDRjVWs2a0ljU1ZuM1p2VGdWVUtsR2tDWndzZDN2RXFJZ1ZrZVhRZE9ZU0pTQ2NObFdtbGZUZUZEbURqVmVabm05aFVGSm13VHM4RTQ4RFBZZlNnY0xnVVpsTExDTGxYZQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本とオーストラリアは台湾周辺での中国の工作を非難...「不安定化」</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi7gNBVV95cUxQbXZ3WUdTQm5veDFRZVJyUjhqUU1QQnpEOWRlUFNvZllJNHF4Q1FqZFJFaDdWZEdrQjVtMk1lcUhjRzk5c29zam8wckhMODVBUmgyby1TWDJ4dm5RUVlxVG02cm03dTJzT25EVmZULXFObXNUNnJYdk4zTnBpby1DUlpacTRJWklwX256b0k0Q2dKaE9HTDBaQ3B0Q0d3UXA5YWFxT2hrX3ZINWpNSEtkZWlFSDFWdG95U2pheU4xOXltak1XZVE5R1pmSFBjbVR5cWVNYS1lREhyRlFIV3ZDekJFNDRlUnhfdDdVWUlxZzUwaFVJR01VTFJPdnVYa3I1aVh4ZGlCZXBfM2FwNjJuREs0c001YzhZUUhZNDFjeGNrRWQ2OGFNZ3Z0V1A0dDhCeHRvOFhJM2kwQXdsQW83UnBQeXFUQUFfeTM1ZjZxMVczUkwzVmJUN3NBU2lTalEyTmI4YXp6SVFjcE5sUGJyLXAxVkdFV0x0NG5DNk8zMVUwd0RkQkU4VVFGajU5SFZqVVdYaVlFYnRIXzNLa2luaHZqLURma3VScDZzSjFFZWQySFZrSTdVV3FvWDhaVldHVTNSTW52eExvc093UXVTSkhSZzlTUC15akd4ZHhlN1czTWFTODY5bmMyS0VVQQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日銀はさらなる金利引き上げの必要性を検討している</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi2gFBVV95cUxNLXBFWl9jWlF6anVSLUpTWXk3YjRCSERDMXdybnBMVldrQ3Q5VG9jeldpRG1obm1IeEt2M1BOeHh5ekhhTWV2OVR2WmFwOVdGa2NtVGxxY1NkeTRIUU8zcnFoUVZtU3l6ZWtlWGhtc1hSbG9QZm9VaDY3eE0tY0h4N294NTZtOHdHcXo4OEt6THV3V05qbXJQdV8yZ01wZHgtVUp0S2NueWQxMTBuNVViSlZvYVBhSTlMUVI0bkhYbjFNMldTY2RPdWljd0Y5dDY5SElZdzhKdUNNdw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本代表：公式戦および親善試合のニュース、日程、結果</a></div></div></div>`)[0];
+                popup_e7cce3ca942c578e2118a501f30b8841.setContent(html_6c4e01f80d2dafc1f1c663c5535a010a);
+            
+        
+
+        circle_marker_ce3f8402a0c5aafc143b693508f75b98.bindPopup(popup_e7cce3ca942c578e2118a501f30b8841)
+        ;
+
+        
+    
+    
+            circle_marker_ce3f8402a0c5aafc143b693508f75b98.bindTooltip(
+                `<div>
+                     サウジアラビア 🇸🇦
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bc5d29d4b0ab9e7aea9d772576438218 = L.circleMarker(
+                [23.42, 53.84],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_18e30a345dccc2cf3d4cd47124789e79 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_f724724b4628f466ff55d6735fa22b2f = $(`<div id="html_f724724b4628f466ff55d6735fa22b2f" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【UAE 🇦🇪】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipAFBVV95cUxOMlE2UFF2T1F4T3BheHNJQkRwQ0lleVZQSEFXenJNamRPZWRJd2FaOWp5ZGpHdjVwMU1ScTdPZVdxY0xBQlh6VHVoX1pza1dmd0lnWmZmZDRCQkhzUmtNLXJ5VWJkR1h6QXdOcFVXRzVCN3FldTBTcGJiLVJlRHN5R0ZiZXNLWWZnbDJZNHJiOWxfblRNcjdObGxRRGFreEpKS1lHcQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・SFO発の日本航空便が激しい乱気流に見舞われ、乗務員が負傷</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMisgFBVV95cUxOZGx3OXVteUhTWDY5c0ZWbG1PMm91RVd6SXlIcGI3NVhxZWsxMkJrRDg1bjBHbTF1eWdfQ1A3dGhlWDZIaGJmM21fRThPa2xkOUNHQUdVZFY5MmZTcGZOUDM0QkQ3U1JTZURSaHhvTWcxT2p3eFZzS3oycWMyT0VPd0dmQ2xNbV81YzMybEJxZmk3aEtjN3U2aDM2RkVQUm9QNFAxVTVqVDJPVzRPQXNUUFN3?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・Apple、日本で限定版の AirTag を無料配布</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMingNBVV95cUxPanBqX0JlTTFBUjhUMWlpaG1JVzBKUjZ4SHFzaUZPaUE1LVgxSEdjU0owWlhSMnBzZXRwV18tc1JFRlFDVFpRZVNpTGNTc0tHSFBnWC01UVZzcHB0ZHRFWTNYQzFiNm9vOGtka0RFNmtzdzNoR2FTLTNOTTVXYUlLVGdfbXhYeUdTSGRIX204eFFhd0lVcTA3aFNwSGQ2Zlc5R0VaTm5mcVY1bXBzWHRsLTJXekN6TC1kc0FRNVhmU2VrWWlwX2JiN3F5Ukk0VDBnZlI1amhLd0poczlobl83TkUtaUkwM0IyQjFXNW9OWk1sOU1kOGcxb2ZRRGVRRlBLTl9oaVN6ZFdGT0R3WjJmT0tuQXVBcFNCNFlMeGJQTURGc2pER0tqclJMYTVKb1p0cU1UVGJ0Q0NUSXB3MF9FT3psRXBhUGt1Y1dhUk1NRWhsdllCQXVBVlp5NFYxcmVuU2hVZ3AtSlpBQXpwVzNQMnZ0M040a0FZM1pLVnNxVFFObGhFS2ZzVUFBbFhGTW1kdUpPam5Wc3Q1Q1dWakE?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・意見 |日本は軍事支出を強化</a></div></div></div>`)[0];
+                popup_18e30a345dccc2cf3d4cd47124789e79.setContent(html_f724724b4628f466ff55d6735fa22b2f);
+            
+        
+
+        circle_marker_bc5d29d4b0ab9e7aea9d772576438218.bindPopup(popup_18e30a345dccc2cf3d4cd47124789e79)
+        ;
+
+        
+    
+    
+            circle_marker_bc5d29d4b0ab9e7aea9d772576438218.bindTooltip(
+                `<div>
+                     UAE 🇦🇪
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e5d36d3c96146ec03a4c6b6fff2bf03c = L.circleMarker(
+                [26.82, 30.8],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_1c0fed72bb68bb50f90474e1d54146bd = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_66a304a28fee9b2fef5e13b0a219638b = $(`<div id="html_66a304a28fee9b2fef5e13b0a219638b" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【エジプト 🇪🇬】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi3ANBVV95cUxQdndmQmsyWVItY3lkNjREdk9jWWJmbFp3S3lJUFc1TTliekVXSzMzRUlRQzVYbkNWeWxXcXlqbmFIVlN5cGlEb3R4dnAtWDBwQ3V5cWw4Si11NHQzOWV5NFN5V1FNTFIwYlVuYU5jMkR4amQ2RlpPWDhlaUdpMjI1Y1p6ekxKREkybmtDRUw5ZWxldUFfTlh4QXl0X1Zpc3hwdXVraW5ZbkUzRjl4aXV1elhKWlprTjFPVTRSMENGV2dzRkwyZGV5YWgtTFJEamVDU2ZaVk1hTFpiUldVUVZoSjQ3UWFHX2hTdW51a1pteHZTQU5XYkZ2SVpiSWlSbzZuTl96YlhaVV92YVdxZ0NVNGpKVXBIWGFxcnZYSGFMUEl3UG5Yc1JMMzZnd1I5V3JJdlpRWmdHekNfYVRtSTB3OHNGMFQ2eFowa3N4amtfY3B2VTNqWTV4RU5uYmtVWDQ2WEJWZmZiMkpCMndua1RHMi1GM0o2bE5zQnBtYnBvOE5vTWQ0WXR5RmEyaGRScmk2VW1yZlJVWFFMUDZhSk5tSWp0SC1PTkNaOHZtcldnSFE1YlFyS0N5N2lUbkN2Yk1zazExTG56Ui1ZdVpBMC1UVHZyNGhzZlFFWkxJOdIB4gNBVV95cUxNWEtjT1d4czFxWU5pVzBzdURkZXRlWWk2My04ZjhlcVc1bzdMV05EdGEzSzZjZWxCYVVjMVhGYWJxVVBDd3NNUEh1MXo5cERWRGVjUVdCRUZnTlItcWpkME9SS2tVdkpXOTFtUkljNG5lbFc1b2hEMkszZXNteHBxWnBLQ2FZS2NxdXo0dkFFQzlkVjJ2cFRoZEhOYnNPal9lcVZLbmRydkF0b3NXVUpONS1hTHo4dG4yNE1SeXE4b0VIa3liVDgxdEozME5OWDlzWU4zcWFsU2pjbExaby1BajZjRG94amdnTUJRZXNhTWtWb1dDY01pUk5Od1EydGhyN2ZJVS1XZEdTQ3dJc3NsN01IcDl1Mm9mbUZJTVRLcDNVNGwzTlFwRFdZN0JHZVJhR3h0U1BBT1BPZzlUQ1pkVnB2T1BFdGRMNzUyY3dKM3VpU0dURUo4Rm91V2hlTW01M1d3aHd6X1dpTlo5QlpuOHN1QkhhejF0enNrWURBZ1l2NElQUjVWcHJkR3dPUkZnX1Y2aGNTVDdvWFZHdHNEZlhQZldBXzRSU0VsaGo2Wl9BVDhoT0QydURVLUZpSlh4NlBwdFZKUUhESGlyLXE5bnBVRktVTjRPd2p2YjlmUGpxdw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・「日本銀行」：この国の実質金利は依然として低い</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE5CMXV0bk5Zd0VxLXpRc0V6SldxNmNzc1dMdXdHSEZxdGViYVVsUmtSOVdaR0ZJNkh4bGNCOUlJN0ZOZWJHdjdPUU1pUFNnSjhMXy1GR3M5UGVYc0po?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本沖で地震が発生。その強さを知る</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMirwJBVV95cUxQX2FNQ1BNcWZ3Vkd6ZWlWWEFaYTFIZ0NiU0dFb2R4dUw5ZUYzVU9KRURjQk5SbVpJNE5TaW16QmdFd0JleTBScG91QlhVa2JPTzlKRlk4UXk5a1JMWXFSVFVwUFR6ZXFOR0cyMVdpQUxzV3ZpZmtsbHJqX1RZRnNDX1B1Y2lUN1NwTkJid3pPNHNXMjZib0ktR3Y1UGh3UnNNcFhuNTJqdV9sR1dYUVdfMnRPdW9BTDR3N3kwOG1DMjVKV2EzaFY0cWVYSjVVazE0ZW9vakV1eExaZ1AwTGxXZVlxaElXZDl4Wm9JTVlHNzV4X0Fya2dTbk41YTk4TFF1WGxiTjRtTnpiY1U2Zy1RendwT3R2V2twaFAzRFM3V25SLTdRX0xZWDI4X2U3cGs?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・7月の日本の輸出は前年比14％減少</a></div></div></div>`)[0];
+                popup_1c0fed72bb68bb50f90474e1d54146bd.setContent(html_66a304a28fee9b2fef5e13b0a219638b);
+            
+        
+
+        circle_marker_e5d36d3c96146ec03a4c6b6fff2bf03c.bindPopup(popup_1c0fed72bb68bb50f90474e1d54146bd)
+        ;
+
+        
+    
+    
+            circle_marker_e5d36d3c96146ec03a4c6b6fff2bf03c.bindTooltip(
+                `<div>
+                     エジプト 🇪🇬
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_edae2215f1399d950140fc6f608189f9 = L.circleMarker(
+                [-30.55, 22.93],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_94832b44f6719debeaf5eafc739bf32e = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_fc3b4cde9a40c40c1a32eea3ae9113a8 = $(`<div id="html_fc3b4cde9a40c40c1a32eea3ae9113a8" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【南アフリカ 🇿🇦】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiuwFBVV95cUxNWGJLU3hEcTI5b3lEWHJyYTc2WW5aVWtBN2RDbTkycWI2b1ZBajI2ZjhJN09IQXdQZk5lZ1ZqOHoyNmNuNkMwMldobEJpV3ZIWWlOcEdKU25hY21vc1h4N1VIT3JlWTNJU3B6OXNPcjdZcnZrOFpZNkg4b3lpQk41NENXdHNFS3Y2SjdpNl9vUnpIMV9FcFl5YXFmZ1FhOGhRSG1FS2xmb1NSYnVOTmh1QXREWHlPRGNyVHhz?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・さらば、ムザンシ: チェスリン・コルベと家族が新たな冒険のために日本へ帰国</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi7gJBVV95cUxPT0Nkb2NEOGd3SVdJaVB0elptNks5QkFGMnNvSnZsQlZBSjZJYUdKMlRRTW4xZ1FSSkRkcEJiajJUb1BhWjM1VkpQZUhWSnVXZnNMc0pYeURiX3RQU05PSEVoWUcxUU5QMXd6MjlsNlpYV3lpeTVEZmJhb3RYNFRyTzdXZEczYmhWTk1KaHVWelFzTDJXSUtCVFp1UzIzem9QWFpuSWdoXzJVTjRxNlNJY2UxcE1kVC1TeDFUaDRTeU1Jd0dRTW0wUlBUelFMVUhucTNWYlhHMWc5TlIxSDdpSHV1WXJLRG1DbGxtR1ZQR0V2eUxaQm1BanRKcm5saXE0NDMyRW13RHRwRVJpNVhsbjNnanFyeTdGdFEtanlWQVBBRkJnSVR1SXhBSGZscjFYd2loNFFkUVNnRUFVZkZaOTE3eTd0OFFwVFlfT1VJTGtEWU14QUpYemk0UERuLWstTWoxNlBTQlN3RGRqVHc?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本：石川初の冬の競りで記録的な価格のブリが2万2000ユーロ以上で落札</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMilAFBVV95cUxQUHllazlHN2pDZ0VST3pnOFR4aXV0OVBsNFJoOFJfb1V4RUoyZnFyY1RwNGpGQmlyc0VLVmxBOFdDb0V5UnMzbjJyblNvaExkckpOUVdrU2FFT1NXVFRiM2N3enEyTEZVNnBkRzBzZkFFaVA1VFRmUzY3TmtIc25IZmFidms2RzJyVFUxd2wtV2xTQ2NX?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・日本は持続可能な財政への野心を実現に変える</a></div></div></div>`)[0];
+                popup_94832b44f6719debeaf5eafc739bf32e.setContent(html_fc3b4cde9a40c40c1a32eea3ae9113a8);
+            
+        
+
+        circle_marker_edae2215f1399d950140fc6f608189f9.bindPopup(popup_94832b44f6719debeaf5eafc739bf32e)
+        ;
+
+        
+    
+    
+            circle_marker_edae2215f1399d950140fc6f608189f9.bindTooltip(
+                `<div>
+                     南アフリカ 🇿🇦
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2758935fd85f00489407c83af7f6567f = L.circleMarker(
+                [9.08, 8.67],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_95b033669ba1f5848f5cce8e0f7693bc = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_0aa4d20e6cde1f4c296fb9c3210aef78 = $(`<div id="html_0aa4d20e6cde1f4c296fb9c3210aef78" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【ナイジェリア 🇳🇬】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMikwFBVV95cUxQaDBsVmpiZHJNTXVGUzQtVm1SSW83Rkt4RFd5cU1SdzZJZkxtU1c3UXRkNmx6ODMzMGZ4YWFyQ09XclFKUFpseVpnaDAzeEVsVGdNZHNaaHJnNHJTNWU4Q1hqUk9rNC1rbFBKY1JPbFc3M0I5TThGdk5GbjN6Yko2STRjWHhMYURvN2tzREo5R2Y2bU3SAZMBQVVfeXFMTUh6X1ZPNV9DQmZBdl9jRDU3WVJ3a3BwdUZOaGNBZ0h0ZkF3engzd25FSkxweFB6LXRjQ3psbVJEVHF2N1A1dlZJc3FydHV2NThzRzJnMkJUeDRUMUNCMG1nWlY4X1NNNUZGMFZsOThtdnIyenhRWllZemZUQ1hydENVVk1mdm55cUJDS0RBMWtXbjY4?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・インドが日本を抜いて第4位の経済大国になると報告書が発表</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMipgFBVV95cUxOc1BDbkhlLTdHeXJUc3ZsczBheGU2LTlXU2JjR05hWTZSYWtkVFZuQUd2WUhkXy1NZHo3SndNLW1JMU1oekZDRVI3dmRtWXJXR3hXdC1HY092YU9WNFdKdmhGa09iVTZ6UWNfZWhnZFFtNHBQX1duakplWWwwT2xGbVJZXzhsOUgtSGhFQVk1aG1vVFFXNl96WmFJRXpMaV9FV1hQMU1R?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・ベトナムのFPTが日本市場に初の商用チップを納入</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMigwFBVV95cUxQMlBEa3F4UURpT2paRmFTdTNGZWZnbjRPZDZIMzF1VVBodVBCYzhUUVdRTk84cXNhZUhSRlR1WUtUN2tJdHp2ODEwanliaWZYZE9DU2JSZlhMdnlJdTZ6bEVqdnBWWlJYeEJtRHJFc1lUY1ppcUZjS1o0SWY3UGZxV3JOYw?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・KOKO ホテルの日本観光ビジョン</a></div></div></div>`)[0];
+                popup_95b033669ba1f5848f5cce8e0f7693bc.setContent(html_0aa4d20e6cde1f4c296fb9c3210aef78);
+            
+        
+
+        circle_marker_2758935fd85f00489407c83af7f6567f.bindPopup(popup_95b033669ba1f5848f5cce8e0f7693bc)
+        ;
+
+        
+    
+    
+            circle_marker_2758935fd85f00489407c83af7f6567f.bindTooltip(
+                `<div>
+                     ナイジェリア 🇳🇬
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bf4b5ef1c9eec9a1ec2e7198fdea7d6a = L.circleMarker(
+                [31.79, -7.09],
+                {"bubblingMouseEvents": true, "color": "#03dac6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#03dac6", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_e497513ea445f8f273417551afeb8848);
+        
+    
+        var popup_db1e6f7b623ea386fcc635b60a332bf7 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_fa3b414b2c6bb7f3975e4de31cbbe300 = $(`<div id="html_fa3b414b2c6bb7f3975e4de31cbbe300" style="width: 100.0%; height: 100.0%;"><div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【モロッコ 🇲🇦】</b><br><br><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE1STEI0aEN5TjBRaUtoS3B5dFJyWEFuQVBTUFJBV0ozY1phMGxsVG90aXBvQVE3RnJKME5vOXJvOGpMVjQtOWN3OW1Nay1oQUtGZXVlZ2FYRF9DUQ?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・2025 年の言葉</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE9Nb3ZqXzBLYlBKVVdBUW9qR3dYZUZOeG85bUlDTXFINzhtTFEzTzhJLTQyOWhadTFIMnVhdTJDeERzVElxTHVqVW9NeEZwN1Y5d3E1Rk1HbWl4dmRL0gFiQVVfeXFMT1lvLWRacFpudjVXSzBjbXdBTGpJRTdudTZBR0xXZFBhZzd2OUFOLURhTlB0WkpzbndEY1B4U2JlZUtrYW5LOG05Q0N1ODlDTFRJUXZKZGdyUXhBYUViM2h3UUE?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・欧州諸国、カナダ、日本はガザ危機に「深い懸念」を表明</a></div><div style='margin-bottom:15px; line-height:1.5;'><a href='https://news.google.com/rss/articles/CBMi9AFBVV95cUxOd3YydDJvUFZ3TXZHSTZLYzJ5M2xhaUxqczROZlNXanRIcF9WczZPUms4NzZwRTF4UTloV0hfUlNxdHJPc19wSWhudV91SWl1djZoUWtzbHh5T0x5VWlsTmlwLTNiWFRTS294clBja0pfQ3Ayei1RbzlobDhRUkpVWDZKdnNVVTgzNWs3d3k5WWpkRV84VXRsSzFsMFdCUUNKUEd2MjRVVzI0YTV3LTlNZEpndnhxbFEtbzBkLS02Y3g1NDY1TjcwbHpHZ25DRGFOSzJjR25uUVBNOXBoWWRRWDdsU3NwUXdmY1ZsTDVuYWpUWHlU?oc=5' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・欧州諸国、カナダ、日本はガザで進行中の危機に「深い懸念」を表明</a></div></div></div>`)[0];
+                popup_db1e6f7b623ea386fcc635b60a332bf7.setContent(html_fa3b414b2c6bb7f3975e4de31cbbe300);
+            
+        
+
+        circle_marker_bf4b5ef1c9eec9a1ec2e7198fdea7d6a.bindPopup(popup_db1e6f7b623ea386fcc635b60a332bf7)
+        ;
+
+        
+    
+    
+            circle_marker_bf4b5ef1c9eec9a1ec2e7198fdea7d6a.bindTooltip(
+                `<div>
+                     モロッコ 🇲🇦
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

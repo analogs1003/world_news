@@ -1,0 +1,32 @@
+name: Daily News Update
+
+on:
+  schedule:
+    - cron: '0 21 * * *' # 日本時間の毎朝6時（世界標準時21時）に実行
+  workflow_dispatch:      # 手動でボタンを押して更新することも可能
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Pythonのセットアップ
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 必要なライブラリをインストール
+        run: |
+          pip install feedparser folium deep-translator
+
+      - name: Pythonスクリプトの実行
+        run: python world_news.py  # あなたのファイル名に合わせてください
+
+      - name: 生成されたHTMLをGitHub Pagesにデプロイ
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages

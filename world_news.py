@@ -2,6 +2,7 @@ import feedparser
 import folium
 import webbrowser
 import time
+from datetime import datetime, timedelta
 import random
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
@@ -74,24 +75,69 @@ def safe_translate(translator, text_list):
     return text_list
 
 def fetch_and_process_country(country, info):
-    """各国からニュースを取得して翻訳する"""
     lat, lon, gl, hl, query = info
-    url = f"https://news.google.com/rss/search?q={query}+when:24h&hl={hl}-{gl}&gl={gl}&ceid={gl}:{hl}"
+    # 収集期間は7日間(7d)のままで、記事の「新しさ」で差をつけます
+    url = f"https://news.google.com/rss/search?q={query}+when:7d&hl={hl}-{gl}&gl={gl}&ceid={gl}:{hl}"
+    
     try:
         feed = feedparser.parse(url)
-        raw_titles, articles = [], []
-        for entry in feed.entries[:3]:
+        articles = []
+        current_time = time.time()
+        
+        # 取得上限を20件に増やして、より差が出やすくします
+        for entry in feed.entries[:20]:
             title = entry.title.split(" - ")[0].strip()
-            raw_titles.append(title)
-            articles.append({"country": country, "lat": lat, "lon": lon, "link": entry.link})
+            
+            # --- スコアリングロジック ---
+            # 記事の公開時刻を取得
+            published_parsed = getattr(entry, 'published_parsed', None)
+            if published_parsed:
+                pub_time = time.mktime(published_parsed)
+                diff_hours = (current_time - pub_time) / 3600
+                
+                # 24時間以内なら1.0点、それ以上なら0.3点（古い記事の価値を下げる）
+                score = 2.0 if diff_hours < 24 else 0.1
+            else:
+                score = 0.1
+            # --------------------------
+
+            # 記事の時刻を見やすくフォーマット (例: 12/31 15:30)
+            if published_parsed:
+                # 1. 一旦、構造体からdatetimeオブジェクトを作る (UTC)
+                utc_time = datetime(*published_parsed[:6])
+                
+                # 2. 9時間を足して日本時間(JST)に変換
+                jst_time = utc_time + timedelta(hours=9)
+                
+                # 3. 日本時間でフォーマット
+                time_str = jst_time.strftime('%m/%d %H:%M')
+                
+                # ソート用の数値
+                pub_time = jst_time.timestamp()
+            else:
+                time_str = "時刻不明"
+                pub_time = 0
+    
+            articles.append({
+                "country": country, 
+                "lat": lat, "lon": lon, 
+                "link": entry.link,
+                "raw_title": title,
+                "score": score,
+                "time_str": time_str,
+                "pub_time": pub_time if published_parsed else 0 # ソート用
+            })
         
         if not articles: return []
         
+        # 翻訳処理
         translator = GoogleTranslator(source='auto', target='ja')
+        raw_titles = [a["raw_title"] for a in articles]
         translated = safe_translate(translator, raw_titles)
         
         for i, art in enumerate(articles):
-            art["translated_title"] = translated[i] if i < len(translated) else raw_titles[i]
+            art["translated_title"] = translated[i] if i < len(translated) else art["raw_title"]
+            
         return articles
     except:
         return []
@@ -110,9 +156,9 @@ def create_global_news_center():
         topic_links[a["translated_title"]].append({"country": a["country"], "link": a["link"]})
     
     # 【3カ国以上】で話題のニュースを抽出
-    shared_topics = {t: l for t, l in topic_links.items() if len(l) >= 3}
+    shared_topics = {t: l for t, l in topic_links.items() if len(l) >= 8}
 
-    m = folium.Map(location=[20, 0], zoom_start=2.3, tiles="CartoDB dark_matter", world_copy_jump=True)
+    m = folium.Map(location=[20, 0], zoom_start=3, tiles="CartoDB dark_matter", world_copy_jump=True)
 
     # --- パネルHTML生成 (国旗なし・テキストのみのボタン) ---
     shared_list_html = ""
@@ -142,25 +188,106 @@ def create_global_news_center():
     """
     m.get_root().html.add_child(folium.Element(panel_html))
 
-    # 地図上のマーカー設置
+    # 地図上のマーカー設置ロジックを強化
     country_groups = defaultdict(list)
-    for a in all_articles: country_groups[a["country"]].append(a)
+    for a in all_articles:
+        country_groups[a["country"]].append(a)
     
     for country, articles in country_groups.items():
-        pop_html = f"<div style='min-width:280px; font-family:sans-serif; padding:5px;'><b style='font-size:20px; border-bottom:3px solid #03dac6; padding-bottom:3px;'>【{country}】</b><br><br>"
-        for art in articles:
-            pop_html += f"<div style='margin-bottom:15px; line-height:1.5;'><a href='{art['link']}' target='_blank' style='text-decoration:none; color:#0056b3; font-size:16px; font-weight:bold;'>・{art['translated_title']}</a></div>"
+        # 記事数ではなく「スコアの合計」を算出
+        total_score = sum(a["score"] for a in articles)
+        count = len(articles)
         
+        # 合計スコアに基づいて半径と色を決定
+        # スコアが高い（＝新しい記事が多い）ほど大きく、赤くなる
+        radius = 5 + (total_score * 2.5) 
+        
+        if total_score >= 12:
+            color = "#ff1744"  # 鮮度の高いニュースが満載（超ホット）
+        elif total_score >= 6:
+            color = "#ff9100"  # 新旧織り交ぜてニュースがある
+        elif total_score >= 3:
+            color = "#ffea00"  # ニュースはあるが、少し古い
+        else:
+            color = "#00e5ff"  # 記事が少ない、または古いものばかり
+
+        # ポップアップ内のスタイルと構造を定義（ダークモード・文字大きめ）
+        pop_html = f"""
+        <div style='
+            min-width: 500px;
+            max-width: 700px;
+            background-color: #1e1e1e; 
+            color: #e0e0e0; 
+            padding: 20px; 
+            border-radius: 12px; 
+            font-family: "Meiryo", "Hiragino Kaku Gothic ProN", sans-serif;
+            line-height: 1.5;
+        '>
+            <div style='border-bottom: 1px solid #444; margin-bottom: 15px; padding-bottom: 10px;'>
+                <b style='font-size: 26px; color: #90caf9;'>【{country}】</b><br>
+                <span style='color: #888; font-size: 16px;'>注目度: {total_score:.1f} / 記事数: {count}</span>
+            </div>
+        """        
+        
+        # 記事を新しい順に並び替える
+        articles.sort(key=lambda x: x['pub_time'], reverse=True)
+
+        # 記事リストの作成
+        for art in articles[:8]:
+            new_badge = "<span style='background:#b71c1c; color:white; font-size:12px; padding:2px 6px; border-radius:3px; margin-right:8px; vertical-align:middle;'>NEW</span>" if art["score"] > 1.0 else ""
+            
+            pop_html += f"""
+            <div style='margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;'>
+                <div style='font-size: 14px; color: #aaa; margin-bottom: 4px;'>
+                    {art['time_str']}
+                </div>
+                <div style='display: flex; align-items: flex-start;'>
+                    {new_badge}
+                    <a href='{art['link']}' target='_blank' style='
+                        text-decoration: none; 
+                        color: #a5d6a7; 
+                        font-size: 20px; 
+                        font-weight: 500;
+                        line-height: 1.4;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 450px;                        
+                    '>
+                        {art['translated_title']}
+                    </a>
+                </div>
+            </div>
+            """
+        
+        pop_html += "</div>"
+                
         folium.CircleMarker(
             location=[articles[0]["lat"], articles[0]["lon"]],
-            radius=13,
-            popup=folium.Popup(pop_html + "</div>", max_width=450),
-            tooltip=country,
-            color="#03dac6",
+            radius=radius,
+            popup=folium.Popup(pop_html + "</div>", max_width=750),
+            tooltip=f"{country}: スコア {total_score:.1f} ({count}記事)",
+            color=color,
             fill=True,
-            fill_color="#03dac6",
-            fill_opacity=0.7
+            fill_color=color,
+            fill_opacity=0.5,
+            weight=1
         ).add_to(m)
+    
+    # 地図に凡例（説明書き）を追加するコード（保存直前に入れる）
+    legend_html = '''
+        <div style="position: fixed; 
+        bottom: 50px; left: 50px; width: 150px; height: 120px; 
+        background-color: white; border:2px solid grey; z-index:9999; font-size:14px;
+        padding: 10px;">
+        <b>日本への注目度</b><br>
+        <i style="background:#ff1744;width:10px;height:10px;display:inline-block"></i> 激アツ(新着多)<br>
+        <i style="background:#ff9100;width:10px;height:10px;display:inline-block"></i> 活発<br>
+        <i style="background:#ffea00;width:10px;height:10px;display:inline-block"></i> 通常<br>
+        <i style="background:#00e5ff;width:10px;height:10px;display:inline-block"></i> 静か<br>
+        </div>
+        '''
+    m.get_root().html.add_child(folium.Element(legend_html))
 
     output_file = "index.html"
     m.save(output_file)
